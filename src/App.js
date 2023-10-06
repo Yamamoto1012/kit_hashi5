@@ -1,9 +1,10 @@
 import './App.css';
+import Login from './components/auth/Login';
 
 function App() {
   return (
     <div>
-      <h1 className='text-red-500'>My Board App</h1>
+      <Login />
     </div>
   );
 }
