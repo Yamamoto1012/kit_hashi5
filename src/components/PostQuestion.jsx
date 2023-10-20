@@ -1,16 +1,21 @@
 import { useState } from "react"
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 const PostQuestion = () => {
     const [question, setQuestion] = useState('');
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        const user = auth.currentUser;
         try {
             const docRef = await addDoc(collection(db, 'questions'), {
                 text: question,
                 timestamp: new Date(),
+                author: {
+                    uid: user.uid,
+                    displayName: user.displayName,
+                }
             });
             console.log('Document written with ID: ', docRef.id);
             setQuestion('');

@@ -23,6 +23,7 @@ const QuestionList = () => {
             {questions.map(question => (
                 <div key={question.id}>
                     <p>{question.text}</p>
+                    <p>Asked by: {question.author ? question.author.displayName : 'Anonymous'}</p>
                     <DeleteQuestion questionId={question.id} />
                 </div>
             ))}
