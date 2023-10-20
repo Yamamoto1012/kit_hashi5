@@ -1,8 +1,12 @@
 import React from 'react'
+import QuestionList from './QuestionList'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <h1>Question</h1>
+      <QuestionList />
+    </>
   )
 }
 
