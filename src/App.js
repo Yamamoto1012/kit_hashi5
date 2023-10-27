@@ -4,7 +4,10 @@ import Login from './components/auth/Login';
 import Logout from './components/auth/Logout';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Navbar from './components/sidebar/Sidebar';
+import Profile from './components/Profile';
 import PostQuestion from './components/PostQuestion';
+import QuestionDetail from './components/QuestionDetail';
+
 
 function App() {
   return (
@@ -14,7 +17,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/Profile" element={<Profile />} />
         <Route path="/post" element={<PostQuestion/>} />
+        <Route path="/questions/:questionId" element={< QuestionDetail />} />
       </Routes>
     </Router>
   );
