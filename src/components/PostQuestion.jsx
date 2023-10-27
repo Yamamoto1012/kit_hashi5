@@ -36,7 +36,6 @@ const PostQuestion = () => {
             <button type="submit" className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
                 Post
             </button>
-
         </form>
       );
 }
