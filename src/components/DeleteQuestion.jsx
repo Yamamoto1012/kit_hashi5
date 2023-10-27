@@ -9,7 +9,7 @@ const DeleteQuestion = ({ questionId }) => {
     };
 
     return (
-        <button onClick={handleDelete}>Delete</button>
+        <button onClick={handleDelete} className='text-red-500'>Delete</button>
     );
 };
 

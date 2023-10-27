@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import DeleteQuestion from "./DeleteQuestion";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebase";
+import { Link } from 'react-router-dom'
+import AnswerQuestion from "./AnswerQuestion";
 
 const QuestionList = () => {
     const [questions, setQuestions] = useState([]);
@@ -22,9 +24,13 @@ const QuestionList = () => {
         <div>
             {questions.map(question => (
                 <div key={question.id}>
-                    <p>{question.text}</p>
+                    <Link to={`/questions/${question.id}`}>{question.text}</Link>
+                    
                     <p>Asked by: {question.author ? question.author.displayName : 'Anonymous'}</p>
-                    <DeleteQuestion questionId={question.id} />
+                    <div className=" flex"> 
+                        <AnswerQuestion questionId={question.id} />
+                        <DeleteQuestion questionId={question.id} />
+                    </div>
                 </div>
             ))}
         </div>
