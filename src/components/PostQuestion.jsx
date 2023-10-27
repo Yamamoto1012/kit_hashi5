@@ -15,6 +15,7 @@ const PostQuestion = () => {
                 author: {
                     uid: user.uid,
                     displayName: user.displayName,
+                    userImage: user.photoURL,
                 }
             });
             console.log('Document written with ID: ', docRef.id);

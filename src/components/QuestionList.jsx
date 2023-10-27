@@ -24,6 +24,7 @@ const QuestionList = () => {
         <div>
             {questions.map(question => (
                 <div key={question.id}>
+                    <img src={question.author.userImage} alt={`${question.author.username}'s profile`} />
                     <Link to={`/questions/${question.id}`}>{question.text}</Link>
                     
                     <p>Asked by: {question.author ? question.author.displayName : 'Anonymous'}</p>
