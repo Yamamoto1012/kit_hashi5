@@ -3,7 +3,7 @@ import Home from './components/Home';
 import Login from './components/auth/Login';
 import Logout from './components/auth/Logout';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Navbar from './components/sidebar/Sidebar';
+import Navbar from './components/sidebar/Navbar';
 import Profile from './components/Profile';
 import PostQuestion from './components/PostQuestion';
 import QuestionDetail from './components/QuestionDetail';

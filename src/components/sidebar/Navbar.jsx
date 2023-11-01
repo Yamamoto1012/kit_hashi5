@@ -1,7 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
+import { auth } from '../../firebase';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate(`/users/${auth.currentUser.uid}`);
+  }
+
   return (
     <nav>
       <div className = "">
@@ -25,6 +33,14 @@ const Navbar = () => {
         </div>
         <div className=" text-xl">
         <Link to="logout">Logout</Link>
+        {auth.currentUser && (
+        <img
+          src={auth.currentUser.photoURL}
+          alt={`${auth.currentUser.displayName}'s profile`}
+          onClick={handleProfileClick}
+          className="profile-icon"
+        />
+      )}
         </div>
       </div>
 
