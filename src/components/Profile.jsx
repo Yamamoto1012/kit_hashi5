@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 const Profile = () => {
   const { userId } = useParams();
   const [userProfile, setUserProfire] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -17,14 +18,22 @@ const Profile = () => {
     };
     fetchUserProfile();
   }, [userId]);
+
+  const handleEdit = () => {
+    navigate("/edit-profile");
+  };
+
   return (
     <div>
       {userProfile && (
         <div>
           <h1>{userProfile.displayName}</h1>
           <p>{userProfile.bio}</p>
-          <p>{userProfile.skills.join(", ")}</p>
+          <p>{Array.isArray(userProfile.skills) ? userProfile.skills.join(", ") : userProfile.skills}</p>
           <p>{userProfile.position}</p>
+          {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
+            <button onClick={handleEdit}>Edit Profile</button>
+          )}
         </div>
       )}
     </div>
