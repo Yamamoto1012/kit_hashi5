@@ -20,9 +20,6 @@ const Navbar = () => {
           <Link to="Member">Member</Link>
         </div>
         <div className=" text-2xl">
-          <Link to="Mypage">Mypage</Link>
-        </div>
-        <div className=" text-2xl">
           <Link to="Announcement">Announcement</Link>
         </div>
         <div className=" text-2xl">
