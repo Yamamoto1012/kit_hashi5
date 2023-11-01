@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, db} from '../firebase';
+import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 const CreateProfile = () => {
@@ -10,7 +10,7 @@ const CreateProfile = () => {
     const [skills, setSkills] = useState('');
     const [position, setPosition] = useState('');
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const user = auth.currentUser;
 
@@ -23,7 +23,8 @@ const CreateProfile = () => {
                 displayName,
                 bio,
                 skills: skillsArray,
-                position
+                position,
+                photoURL: user.photoURL  // Googleアカウントから取得したプロフィール画像URLを保存
             });
 
             navigate(`/users/${user.uid}`);
@@ -32,31 +33,31 @@ const CreateProfile = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-        <input
-            type="text"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            placeholder="Display Name"
-        />
-        <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            placeholder="Bio"
-        />
-        <input
-            type="text"
-            value={skills}
-            onChange={(e) => setSkills(e.target.value)}
-            placeholder="Skills (comma separated)"
-        />
-        <input
-            type="text"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            placeholder="Position"
-        />
-        <button type="submit">Create Profile</button>
-    </form>
+            <input
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Display Name"
+            />
+            <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder="Bio"
+            />
+            <input
+                type="text"
+                value={skills}
+                onChange={(e) => setSkills(e.target.value)}
+                placeholder="Skills (comma separated)"
+            />
+            <input
+                type="text"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                placeholder="Position"
+            />
+            <button type="submit">Create Profile</button>
+        </form>
     )
 }
 

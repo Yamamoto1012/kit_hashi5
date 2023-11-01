@@ -17,10 +17,10 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </div>
         <div className=" text-2xl">
-          <Link to="Member">Member</Link>
+          <Link to="member">Member</Link>
         </div>
         <div className=" text-2xl">
-          <Link to="Announcement">Announcement</Link>
+          <Link to="announcement">Announcement</Link>
         </div>
         <div className=" text-2xl">
           <Link to="post">Post</Link>

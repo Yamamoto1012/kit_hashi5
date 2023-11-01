@@ -9,6 +9,7 @@ import PostQuestion from './components/PostQuestion';
 import QuestionDetail from './components/QuestionDetail';
 import CreateProfile from './components/CreateProfile';
 import EditProfile from './components/EditProfile';
+import MembersPage from './components/MembersPage';
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/member" element={<MembersPage />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/post" element={<PostQuestion/>} />
         <Route path="/users/:userId" element={<Profile />} />
