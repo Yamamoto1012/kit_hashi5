@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { doc, getDoc, updateDoc} from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const EditProfile = () => {
     const [displayName, setDisplayName] = useState('');
@@ -16,10 +16,11 @@ const EditProfile = () => {
             const docRef = doc(db, 'users', user.uid);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setDisplayName(docSnap.data().name);
-                setBio(docSnap.data().bio);
-                setSkills(docSnap.data().skills);
-                setPosition(docSnap.data().position);
+                const data = docSnap.data();
+                setDisplayName(data.displayName || ''); // フィールド名を修正
+                setBio(data.bio || '');
+                setSkills(data.skills.join(', ') || ''); // 配列を文字列に変換
+                setPosition(data.position || '');
             } else {
                 console.log('No such document!');
             }
@@ -32,13 +33,14 @@ const EditProfile = () => {
         e.preventDefault();
         const userProfileRef = doc(db, 'users', user.uid);
         await updateDoc(userProfileRef, {
-            displayName: displayName,
-            bio: bio,
-            skills: skills,
-            position: position,
+            displayName,
+            bio,
+            skills: skills.split(',').map(skill => skill.trim()), // 文字列を配列に変換
+            position,
         });
         navigate(`/users/${user.uid}`);
     }
+
     return (
         <div>
             <h1>Edit Profile</h1>
