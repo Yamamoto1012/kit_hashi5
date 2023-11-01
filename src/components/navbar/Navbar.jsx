@@ -11,34 +11,37 @@ const Navbar = () => {
   }
 
   return (
-    <nav>
-      <div className = "">
+    <nav className=''>
+      <div className='flex justify-between'>
         <div className=" text-4xl">
           <Link to="/">Home</Link>
         </div>
-        <div className=" text-2xl">
-          <Link to="member">Member</Link>
+        <div className=' flex'>
+            <div className=" text-2xl pr-2">
+              <Link to="member">Member</Link>
+            </div>
+            <div className=" text-2xl pr-2">
+              <Link to="announcement">Announcement</Link>
+            </div>
+            <div className=" text-2xl pr-2">
+              <Link to="post">Post</Link>
+            </div>
+            <div className=" text-2xl pr-2">
+              <Link to="login">Login</Link>
+            </div>
+            <div className=" text-2xl pr-2">
+              <Link to="logout">Logout</Link>
+            </div>
+            {auth.currentUser && (
+            <img
+              src={auth.currentUser.photoURL}
+              alt={`${auth.currentUser.displayName}'s profile`}
+              onClick={handleProfileClick}
+              className="profile-icon"
+            />
+          )}    
         </div>
-        <div className=" text-2xl">
-          <Link to="announcement">Announcement</Link>
-        </div>
-        <div className=" text-2xl">
-          <Link to="post">Post</Link>
-        </div>
-        <div className=" text-xl">
-          <Link to="login">Login</Link>
-        </div>
-        <div className=" text-xl">
-        <Link to="logout">Logout</Link>
-        {auth.currentUser && (
-        <img
-          src={auth.currentUser.photoURL}
-          alt={`${auth.currentUser.displayName}'s profile`}
-          onClick={handleProfileClick}
-          className="profile-icon"
-        />
-      )}
-        </div>
+
       </div>
 
     </nav>
