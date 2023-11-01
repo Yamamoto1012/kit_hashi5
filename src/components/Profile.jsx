@@ -1,11 +1,34 @@
+import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Profile = () => {
-    return (
-        <>
-            <h1 className='text-xl text-red-500'>aiueo</h1>
-            <h2 className='text-xl text-orange-500'>シビックテックのなんか作るぞ</h2>
-        </>
-    )
-}
+  const { userId } = useParams();
+  const [userProfile, setUserProfire] = useState(null);
 
-export default Profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userProfileRef = doc(db, "users", userId);
+      const userProfileSnapshot = await getDoc(userProfileRef);
+      if (userProfileSnapshot.exists()) {
+        setUserProfire(userProfileSnapshot.data());
+      }
+    };
+    fetchUserProfile();
+  }, [userId]);
+  return (
+    <div>
+      {userProfile && (
+        <div>
+          <h1>{userProfile.displayName}</h1>
+          <p>{userProfile.bio}</p>
+          <p>{userProfile.skills.join(", ")}</p>
+          <p>{userProfile.position}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Profile;

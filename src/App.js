@@ -7,6 +7,8 @@ import Navbar from './components/sidebar/Sidebar';
 import Profile from './components/Profile';
 import PostQuestion from './components/PostQuestion';
 import QuestionDetail from './components/QuestionDetail';
+import CreateProfile from './components/CreateProfile';
+
 
 
 function App() {
@@ -17,8 +19,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/post" element={<PostQuestion/>} />
+        <Route path="/users/:userId" element={<Profile />} />
         <Route path="/questions/:questionId" element={< QuestionDetail />} />
       </Routes>
     </Router>
