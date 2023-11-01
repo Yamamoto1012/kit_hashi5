@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import PostQuestion from './components/PostQuestion';
 import QuestionDetail from './components/QuestionDetail';
 import CreateProfile from './components/CreateProfile';
+import EditProfile from './components/EditProfile';
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/create-profile" element={<CreateProfile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/post" element={<PostQuestion/>} />
         <Route path="/users/:userId" element={<Profile />} />
