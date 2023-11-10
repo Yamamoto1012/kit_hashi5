@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import { auth } from '../../firebase';
+import Login from '../auth/Login';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -32,9 +33,7 @@ const Navbar = () => {
               <Link className="hover:text-gray-400 transition duration-300" to="logout">Logout</Link>
             </div> */}
             {!auth.currentUser ? (
-            <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="login">Login</Link>
-            </div>
+              <Login />
           ) : (
             <img
               src={auth.currentUser.photoURL}

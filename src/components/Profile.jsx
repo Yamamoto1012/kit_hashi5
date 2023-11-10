@@ -33,13 +33,9 @@ const Profile = () => {
     <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
       {userProfile && (
         <div>
-         <img
-            src={userProfile.photoURL} 
-            alt={`${userProfile.displayName}のプロフィール画像`}
-            className="w-24 h-24 rounded-full"
-          />
-          <h1>{userProfile.displayName}</h1>
-          <p>{userProfile.bio}</p>
+          <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} />
+          <h1>名前:{userProfile.displayName}</h1>
+          <p>自己紹介:{userProfile.bio}</p>
           {/* スキルとレベルの表示 */}
           <div>
             <h2>スキル</h2>
