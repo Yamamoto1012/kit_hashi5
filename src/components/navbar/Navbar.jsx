@@ -28,13 +28,14 @@ const Navbar = () => {
             <div className="text-2xl">
               <Link className="hover:text-gray-400 transition duration-300" to="post">Post</Link>
             </div>
+            {/* <div className="text-2xl">
+              <Link className="hover:text-gray-400 transition duration-300" to="logout">Logout</Link>
+            </div> */}
+            {!auth.currentUser ? (
             <div className="text-2xl">
               <Link className="hover:text-gray-400 transition duration-300" to="login">Login</Link>
             </div>
-            <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="logout">Logout</Link>
-            </div>
-            {auth.currentUser && (
+          ) : (
             <img
               src={auth.currentUser.photoURL}
               alt={`${auth.currentUser.displayName}'s profile`}

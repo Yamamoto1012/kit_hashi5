@@ -23,6 +23,10 @@ const Profile = () => {
     navigate("/edit-profile");
   };
 
+  const Logout = () => {
+    navigate("/Logout")
+  }
+
   return (
     <div>
       {userProfile && (
@@ -34,6 +38,8 @@ const Profile = () => {
           {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
             <button onClick={handleEdit}>Edit Profile</button>
           )}
+          <p>
+            <button onClick= {Logout}> Logout</button></p>
         </div>
       )}
     </div>
