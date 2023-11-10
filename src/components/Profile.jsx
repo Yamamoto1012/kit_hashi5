@@ -31,8 +31,9 @@ const Profile = () => {
     <div>
       {userProfile && (
         <div>
-          <h1>{userProfile.displayName}</h1>
-          <p>{userProfile.bio}</p>
+          <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} />
+          <h1>名前:{userProfile.displayName}</h1>
+          <p>自己紹介:{userProfile.bio}</p>
           {/* スキルとレベルの表示 */}
           <div>
             <h2>スキル</h2>
