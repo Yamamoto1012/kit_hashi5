@@ -33,7 +33,15 @@ const Profile = () => {
         <div>
           <h1>{userProfile.displayName}</h1>
           <p>{userProfile.bio}</p>
-          <p>{Array.isArray(userProfile.skills) ? userProfile.skills.join(", ") : userProfile.skills}</p>
+          {/* スキルとレベルの表示 */}
+          <div>
+            <h2>スキル</h2>
+            <ul>
+              {userProfile.skills.map((skillObj, index) => (
+                <li key={index}>{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+              ))}
+            </ul>
+          </div>
           <p>{userProfile.position}</p>
           {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
             <button onClick={handleEdit}>Edit Profile</button>

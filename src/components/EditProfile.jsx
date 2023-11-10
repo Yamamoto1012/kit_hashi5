@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
+const skillsOptions = [
+    'プログラミング', 'デザイン', 'プロジェクト管理'
+]
+
 const EditProfile = () => {
     const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
-    const [skills, setSkills] = useState('');
+    const [skills, setSkills] = useState([]);
     const [position, setPosition] = useState('');
     const navigate = useNavigate();
     const user = auth.currentUser;
@@ -19,15 +23,59 @@ const EditProfile = () => {
                 const data = docSnap.data();
                 setDisplayName(data.displayName || ''); // フィールド名を修正
                 setBio(data.bio || '');
-                setSkills(data.skills.join(', ') || ''); // 配列を文字列に変換
+                setSkills(docSnap.data().skills || []);
                 setPosition(data.position || '');
             } else {
                 console.log('No such document!');
             }
         };
-
         fetchUserProfile();
     }, [user.uid]);
+
+    //新しいスキルを追加する関数
+    const addSkill = () => {
+        setSkills([...skills, { name: skillsOptions[0], level: 1 }]);
+    };
+
+    // スキルを更新する関数
+    const updateSkill = (index, newSkill, newLevel) => {
+        const updatedSkills = skills.map((skill, i) => {
+        if (i === index) {
+            return { ...skill, name: newSkill, level: newLevel };
+        }
+        return skill;
+        });
+        setSkills(updatedSkills);
+    };
+
+    // スキルを削除する関数
+    const removeSkill = (index) => {
+        const updatedSkills = skills.filter((_, i) => i !== index);
+        setSkills(updatedSkills);
+    };
+
+    // スキル編集部分の UI
+    const skillEditUI = skills.map((skill, index) => (
+        <div key={index}>
+        <select
+            value={skill.name}
+            onChange={(e) => updateSkill(index, e.target.value, skill.level)}
+        >
+            {skillsOptions.map((option) => (
+            <option key={option} value={option}>{option}</option>
+            ))}
+        </select>
+        <select
+            value={skill.level}
+            onChange={(e) => updateSkill(index, skill.name, e.target.value)}
+        >
+            {[1, 2, 3, 4, 5].map((level) => (
+            <option key={level} value={level}>{level}</option>
+            ))}
+        </select>
+        <button type="button" onClick={() => removeSkill(index)}>削除</button>
+        </div>
+    ));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +83,7 @@ const EditProfile = () => {
         await updateDoc(userProfileRef, {
             displayName,
             bio,
-            skills: skills.split(',').map(skill => skill.trim()), // 文字列を配列に変換
+            skills,
             position,
         });
         navigate(`/users/${user.uid}`);
@@ -55,10 +103,8 @@ const EditProfile = () => {
                     <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
                 </label>
                 <br />
-                <label>
-                    Skills:
-                    <input type="text" value={skills} onChange={(e) => setSkills(e.target.value)} />
-                </label>
+                {skillEditUI}
+                <button type="button" onClick={addSkill}>新しいスキルを追加</button>
                 <br />
                 <label>
                     Position:
