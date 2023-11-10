@@ -47,13 +47,14 @@ const Profile = () => {
           </div>
           <p>{userProfile.position}</p>
           {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
+          <p>
             <button onClick={handleEdit}>Edit Profile</button>
              <button
                  onClick={Logout}
                  className="bg-red-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
               >
                  Logout
-             </button>
+             </button></p>
           )}
         </div>
       )}
