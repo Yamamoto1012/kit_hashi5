@@ -10,6 +10,8 @@ import QuestionDetail from './components/QuestionDetail';
 import CreateProfile from './components/CreateProfile';
 import EditProfile from './components/EditProfile';
 import MembersPage from './components/MembersPage';
+import SearchQuestionButton from './components/SearchQuestionButton';
+import SearchResult from './components/SerachResult';
 
 
 
@@ -28,6 +30,8 @@ function App() {
         <Route path="/post" element={<PostQuestion/>} />
         <Route path="/users/:userId" element={<Profile />} />
         <Route path="/questions/:questionId" element={< QuestionDetail />} />
+        <Route path="/" element={<SearchQuestionButton />} />
+        <Route path="/search-results" element={<SearchResult />} />
       </Routes>
     </Router>
   );
