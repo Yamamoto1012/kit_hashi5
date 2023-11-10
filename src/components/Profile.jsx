@@ -33,37 +33,31 @@ const Profile = () => {
     <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
       {userProfile && (
         <div>
-          <img
+         <img
             src={userProfile.photoURL} 
             alt={`${userProfile.displayName}のプロフィール画像`}
             className="w-24 h-24 rounded-full"
           />
-          <h1 className="text-2xl font-bold">{userProfile.displayName}</h1>
-          <p className="text-gray-600">{userProfile.bio}</p>
-          <p className="text-gray-600">
-            {Array.isArray(userProfile.skills)
-              ? userProfile.skills.join(", ")
-              : userProfile.skills}
-          </p>
-          <p className="text-gray-600">{userProfile.position}</p>
-          {auth.currentUser?.uid === userId && (
-            <>
-              <p>
-                <button
-                  onClick={handleEdit}
-                  className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-                >
-                  Edit Profile
-                </button>
-
-                <button
-                  onClick={Logout}
-                  className="bg-red-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
-                >
-                  Logout
-                </button>
-              </p>
-            </>
+          <h1>{userProfile.displayName}</h1>
+          <p>{userProfile.bio}</p>
+          {/* スキルとレベルの表示 */}
+          <div>
+            <h2>スキル</h2>
+            <ul>
+              {userProfile.skills.map((skillObj, index) => (
+                <li key={index}>{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+              ))}
+            </ul>
+          </div>
+          <p>{userProfile.position}</p>
+          {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
+            <button onClick={handleEdit}>Edit Profile</button>
+             <button
+                 onClick={Logout}
+                 className="bg-red-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
+              >
+                 Logout
+             </button>
           )}
         </div>
       )}

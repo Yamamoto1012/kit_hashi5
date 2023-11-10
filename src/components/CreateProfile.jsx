@@ -3,12 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
+const skillsOptions = [
+    'プログラミング', 'デザイン', 'プロジェクト管理'
+]
+
 const CreateProfile = () => {
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
-    const [skills, setSkills] = useState('');
+    const [skills, setSkills] = useState([]);
+    const [selectedSkill, setSelectedSkill] = useState('');
+    const [skillLevel, setSkillLevel] = useState('1');
     const [position, setPosition] = useState('');
+
+    const addSkill = () => {
+        if (selectedSkill && !skills.some((s) => s.name === selectedSkill)) {
+            setSkills([...skills, { name: selectedSkill, level: skillLevel }]);
+            setSelectedSkill('');
+            setSkillLevel('1');
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,13 +30,12 @@ const CreateProfile = () => {
 
         if (user) {
             const userProfileRef = doc(db, 'users', user.uid);
-            const skillsArray = skills.split(',').map(skill => skill.trim());
 
             await setDoc(userProfileRef, {
                 uid: user.uid,
                 displayName,
                 bio,
-                skills: skillsArray,
+                skills,
                 position,
                 photoURL: user.photoURL  // Googleアカウントから取得したプロフィール画像URLを保存
             });
@@ -30,6 +43,23 @@ const CreateProfile = () => {
             navigate(`/users/${user.uid}`);
         }
     };
+
+    const skillSelectors = (
+        <div>
+            <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)}>
+            <option value="">スキルを選択してください</option>
+            {skillsOptions.map((skill, index) => (
+                <option key={index} value={skill}>{skill}</option>
+            ))}
+            </select>
+            <select value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)}>
+            {[1, 2, 3, 4, 5].map((level) => (
+                <option key={level} value={level}>{level}</option>
+            ))}
+            </select>
+            <button type="button" onClick={addSkill}>スキルを追加</button>
+        </div>
+    )
 
     return (
         <form onSubmit={handleSubmit}>
@@ -44,12 +74,7 @@ const CreateProfile = () => {
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Bio"
             />
-            <input
-                type="text"
-                value={skills}
-                onChange={(e) => setSkills(e.target.value)}
-                placeholder="Skills (comma separated)"
-            />
+            {skillSelectors}
             <input
                 type="text"
                 value={position}
