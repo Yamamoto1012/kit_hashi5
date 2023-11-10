@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const skillsOptions = [
     'プログラミング', 'デザイン', 'プロジェクト管理'
@@ -114,7 +114,47 @@ const EditProfile = () => {
                 <button type="submit">Update</button>
             </form>
         </div>
-    );
-}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            Bio:
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="mt-1 p-2 border rounded-md w-full"
+            ></textarea>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            Skills:
+            <input
+              type="text"
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
+              className="mt-1 p-2 border rounded-md w-full"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            Position:
+            <input
+              type="text"
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+              className="mt-1 p-2 border rounded-md w-full"
+            />
+          </label>
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default EditProfile;
