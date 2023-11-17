@@ -36,16 +36,24 @@ const AnswerQuestion = ({ questionId }) => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    value={answerText}
-                    onChange={(e) => setAnswerText(e.target.value)}
-                    placeholder="回答を入力してください"
-                />
-                <button type="submit">回答を送信</button>
-            </form>
-        </div>
+      <div className="mt-4 bg-white shadow-md rounded-lg px-4 py-6 max-w-2xl mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <textarea
+          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none"
+          value={answerText}
+          onChange={(e) => setAnswerText(e.target.value)}
+          placeholder="あなたの回答を入力してください"
+          rows="4"
+        ></textarea>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+          disabled={!answerText.trim()}
+        >
+          回答を送信
+        </button>
+      </form>
+    </div>
     );
 };
 
