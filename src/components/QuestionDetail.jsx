@@ -62,7 +62,9 @@ const QuestionDetail = () => {
                         <div className="flex items-center space-x-3">
                             <img src={answer.userImage} alt={`${answer.username}'s profile`} className="w-10 h-10 rounded-full"/>
                             <div>
-                                <p className="font-semibold">{answer.username}</p>
+                                <p className="font-semibold">
+                                    {answer.username}
+                                </p>
                                 <p>{answer.text}</p>
                             </div>
                         </div>
