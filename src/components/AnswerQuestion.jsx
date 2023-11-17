@@ -1,45 +1,52 @@
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import React, { useState, useEffect } from 'react';
+import { db, auth } from '../firebase';
+import { doc, getDoc, addDoc, collection } from 'firebase/firestore';
 
 const AnswerQuestion = ({ questionId }) => {
-  const user = auth.currentUser;
-  const [answer, setAnswer] = useState("");
+    const [answerText, setAnswerText] = useState('');
+    const [user, setUser] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if(answer.trim() === "") return; // 空の回答を防ぐ
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (auth.currentUser) {
+                const userRef = doc(db, 'users', auth.currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    setUser(userSnap.data());
+                }
+            }
+        };
+        fetchUser();
+    }, []);
 
-    const answersCollection = collection(db, "questions", questionId, "answers");
-    await addDoc(answersCollection, {
-      text: answer,
-      username: user.displayName,
-      timestamp: new Date(),
-      userImage: user.photoURL,
-    });
-    setAnswer("");
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!answerText.trim()) return;
 
-  return (
-    <div className="mt-4 bg-white p-4 rounded-lg shadow">
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded resize-none"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          placeholder="回答を入力してください"
-          rows="3"
-        ></textarea>
-        <button
-          type="submit"
-          className="self-end px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring"
-          disabled={!answer.trim()}
-        >
-          送信
-        </button>
-      </form>
-    </div>
-  );
+        const answerData = {
+            text: answerText,
+            createdAt: new Date(),
+            userId: auth.currentUser.uid,
+            username: user ? user.displayName : "Unknown User",
+            userImage: user ? user.photoURL : "",
+        };
+
+        await addDoc(collection(db, 'questions', questionId, 'answers'), answerData);
+        setAnswerText('');
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <textarea
+                    value={answerText}
+                    onChange={(e) => setAnswerText(e.target.value)}
+                    placeholder="回答を入力してください"
+                />
+                <button type="submit">回答を送信</button>
+            </form>
+        </div>
+    );
 };
 
 export default AnswerQuestion;
