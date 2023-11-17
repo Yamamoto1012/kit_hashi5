@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth";
 
 const Profile = () => {
   const { userId } = useParams();
-  const [userProfile, setUserProfire] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Profile = () => {
       const userProfileRef = doc(db, "users", userId);
       const userProfileSnapshot = await getDoc(userProfileRef);
       if (userProfileSnapshot.exists()) {
-        setUserProfire(userProfileSnapshot.data());
+        setUserProfile(userProfileSnapshot.data());
       }
     };
     fetchUserProfile();
@@ -43,58 +43,27 @@ const Profile = () => {
 
 
   return (
-    <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
+    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
       {userProfile && (
-        <div>
-          <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} />
-          <h1>名前:{userProfile.displayName}</h1>
-          <p>自己紹介:{userProfile.bio}</p>
-          {/* スキルとレベルの表示 */}
+        <div className="space-y-4">
+          <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} className="w-32 h-32 rounded-full mx-auto"/>
+          <h1 className="text-2xl font-bold text-center">名前: {userProfile.displayName}</h1>
+          <p className="text-center">自己紹介: {userProfile.bio}</p>
+          
           <div>
-            <h2>スキル</h2>
-            <ul>
+            <h2 className="text-xl font-semibold">スキル</h2>
+            <ul className="list-disc pl-5 border">
               {userProfile.skills.map((skillObj, index) => (
-                <li key={index}>{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+                <li key={index} className="py-1">{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
               ))}
             </ul>
           </div>
           <p>{userProfile.position}</p>
-          {auth.currentUser?.uid === userId && (
-            <>
-              <p>
-                <button
-                  onClick={handleEdit}
-                  className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-                >
-                  Edit Profile
-                </button>
-
-                <button
-                  onClick={toggleConfirmation}
-                  className="bg-red-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
-                >
-                  Logout
-                </button>
-                {showConfirmation && (
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-lg">
-                    <p className="mb-4">Are you sure you want to logout?</p>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mr-2 rounded"
-                      onClick={handleLogout}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                      onClick={toggleConfirmation}
-                    >
-                      No
-                    </button>
-                  </div>
-                )}
-              </p>
-            </>
+          {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
+            <button onClick={handleEdit}>Edit Profile</button>
           )}
+          <p>
+            <button onClick={handleLogout}> Logout</button></p>
         </div>
       )}
     </div>

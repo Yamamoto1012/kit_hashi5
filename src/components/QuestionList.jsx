@@ -21,15 +21,14 @@ const QuestionList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="max-w-5xl mx-auto p-4">
       {questions.map((question) => (
         <div
           key={question.id}
-          className="mb-4 p-4 border border-gray-300 rounded-lg"
+          className="mb-4 p-4 border bg-white border-gray-300 rounded-lg"
         >
-          <div className="flex items-center mb-2">
-            {/* ユーザー画像をクリックするとプロフィールページに移動 */}
-            <Link to={`/users/${question.author.uid}`}>
+          <div className="flex items-center mb-4 md:flex-row flex-col">
+            <Link to={`/users/${question.author.uid}`} className="flex items-center mb-2 md:mb-0">
               <img
                 src={question.author.userImage}
                 alt={`${question.author.displayName}'s profile`}
@@ -37,30 +36,25 @@ const QuestionList = () => {
               />
             </Link>
 
-            <div>
+            <div className="flex-grow">
               <Link
                 to={`/questions/${question.id}`}
-                className="text-xl font-bold text-blue-500 hover:underline"
+                className="text-xl font-bold text-blue-500 hover:underline block"
               >
                 {question.question}
               </Link>
-              {/* ユーザー名をクリックするとプロフィールページに移動 */}
               <p className="text-gray-700">
-                Asked by:
-                {question.author ? (
-                  <Link
-                    to={`/users/${question.author.uid}`}
-                    className="text-blue-500 hover:underline"
-                  >
-                    {question.author.displayName}
-                  </Link>
-                ) : (
-                  "Anonymous"
-                )}
+                Asked by{" "}
+                <Link
+                  to={`/users/${question.author.uid}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  {question.author.displayName || "Anonymous"}
+                </Link>
               </p>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex justify-between items-center">
             <AnswerQuestion questionId={question.id} />
             <DeleteQuestion questionId={question.id} />
           </div>

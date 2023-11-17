@@ -33,7 +33,7 @@ function Login() {
 
     return (
         <button onClick={login}>
-            Login with Google
+            ログイン
         </button>
     )
 }

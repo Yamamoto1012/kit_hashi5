@@ -5,9 +5,9 @@ import SearchQuestionButton from './SearchQuestionButton'
 const Home = () => {
   return (
     <>
-      <h1>Question</h1>
-      <QuestionList />
       <SearchQuestionButton />
+      <br></br>
+        <QuestionList />
     </>
   )
 }

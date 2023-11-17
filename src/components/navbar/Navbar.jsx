@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import { auth } from '../../firebase';
@@ -6,33 +6,52 @@ import Login from '../auth/Login';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleProfileClick = () => {
     navigate(`/users/${auth.currentUser.uid}`);
   }
 
   return (
-    <nav className='bg-[#F6931D] text-white shadow-md p-4'>
+    <nav className='bg-[#222831] text-white shadow-md p-4'>
       <div className='container mx-auto flex justify-between items-center'>
         <div className="text-4xl">
           <Link className="hover:text-gray-400 transition duration-300" to="/">
-            <img src="logo.png" alt="Logo" className="h-10" />
+            マッチ箱
           </Link>
         </div>
-        <div className='flex space-x-4 justify-center items-center'>
-            <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="member">Member</Link>
-            </div>
-            <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="announcement">Announcement</Link>
-            </div>
-            <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="post">Post</Link>
-            </div>
-            {/* <div className="text-2xl">
-              <Link className="hover:text-gray-400 transition duration-300" to="logout">Logout</Link>
-            </div> */}
-            {!auth.currentUser ? (
+
+        {/* ハンバーガーメニューアイコン */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          >
+            {/* ハンバーガーアイコン */}
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
+
+         {/* メニュー項目 */}
+        <div className={`flex space-x-4 justify-center items-center ${isMenuOpen ? 'flex' : 'hidden'} md:flex md:space-x-4 md:justify-center md:items-center`}>
+          <div className="text-lg font-normal">
+            <Link className="hover:text-[#00ADB5] transition duration-300" to="member">
+              メンバー
+            </Link>
+          </div>
+          <div className="text-lg font-normal">
+            <Link className="hover:text-[#00ADB5] transition duration-300" to="announcement">
+              お知らせ
+            </Link>
+          </div>
+          <div className="text-lg font-normal">
+            <Link className="hover:text-[#00ADB5] transition duration-300" to="post">
+              投稿
+            </Link>
+          </div>
+          {!auth.currentUser ? (
               <Login />
           ) : (
             <img
