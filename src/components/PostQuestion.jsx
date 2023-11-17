@@ -59,8 +59,8 @@ const PostQuestion = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex flex-col">
-        <label htmlFor="question" className="text-lg font-medium">
-          お題名
+        <label htmlFor="question" className="text-lg font-medium text-white">
+          問題名
         </label>
         <input
           id="question"
@@ -72,8 +72,8 @@ const PostQuestion = () => {
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="url" className="text-lg font-medium">
-          ごURL
+        <label htmlFor="url" className="text-lg font-medium text-white">
+          URL
         </label>
         <input
           id="url"
@@ -85,8 +85,8 @@ const PostQuestion = () => {
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="devUrl" className="text-lg font-medium">
-          開発用のごURL (Github等)
+        <label htmlFor="devUrl" className="text-lg font-medium text-white">
+          開発用のURL (Github等)
         </label>
         <input
           id="devUrl"
@@ -98,8 +98,8 @@ const PostQuestion = () => {
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="details" className="text-lg font-medium">
-          ご詳細
+        <label htmlFor="details" className="text-lg font-medium text-white">
+          詳細
         </label>
         <textarea
           id="details"
@@ -110,8 +110,8 @@ const PostQuestion = () => {
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="skills" className="text-lg font-medium">
-          必要なお技術
+        <label htmlFor="skills" className="text-lg font-medium text-white">
+          必要なスキル
         </label>
         <input
           id="skills"
@@ -126,7 +126,7 @@ const PostQuestion = () => {
         type="submit"
         className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
       >
-        送信いたします
+        投稿
       </button>
     </form>
   );
