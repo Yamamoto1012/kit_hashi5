@@ -68,7 +68,13 @@ const Profile = () => {
             <h2 className="text-xl font-semibold">スキル</h2>
             <div className="divide-y divide-gray-200">
               {userProfile.skills.map((skillObj, index) => (
-                <li key={index} className="py-1">{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+                <div key={index} className="py-4">
+                  <div className="flex justify-between">
+                    <span className="font-medium">{skillObj.name}</span>
+                    <span>{`レベル: ${skillObj.level}`}</span>
+                  </div>
+                  {renderSkillLevel(skillObj.level)}
+                </div>
               ))}
             </div>
           </div>
