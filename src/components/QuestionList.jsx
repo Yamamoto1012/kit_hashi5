@@ -54,8 +54,10 @@ const QuestionList = () => {
               </p>
             </div>
           </div>
+          <div>
+              {question.details}
+            </div>
           <div className="flex justify-between items-center">
-            <AnswerQuestion questionId={question.id} />
             <DeleteQuestion questionId={question.id} />
           </div>
         </div>
