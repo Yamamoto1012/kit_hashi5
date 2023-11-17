@@ -90,29 +90,30 @@ const EditProfile = () => {
   }
 
   return (
-    <div>
-      <h1>Edit Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Bio:
-          <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
-        </label>
-        <br />
-        {skillEditUI}
-        <button type="button" onClick={addSkill}>新しいスキルを追加</button>
-        <br />
-        <label>
-          Position:
-          <input type="text" value={position} onChange={(e) => setPosition(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Update</button>
-      </form>
+    <div className="max-w-md mx-auto bg-[#222831] p-8 border border-gray-300 rounded-lg shadow-sm mt-8">
+      <h1 className="text-xl font-bold mb-4 text-white">Edit Profile</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col">
+            <label className="font-medium text-white">Name:</label>
+            <input type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} 
+              className="p-2 border border-gray-300 rounded-md"/>
+          </div>
+          <div className="flex flex-col">
+            <label className="font-medium text-white">Bio:</label>
+            <textarea value={bio} onChange={(e) => setBio(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md"/>
+          </div>
+          <div className="space-y-2">
+            {skillEditUI}
+          </div>
+          <button type="button" onClick={addSkill} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">新しいスキルを追加</button>
+          <div className="flex flex-col mt-4">
+            <label className="font-medium text-white">Position:</label>
+            <input type="text" value={position} onChange={(e) => setPosition(e.target.value)} 
+              className="p-2 border border-gray-300 rounded-md"/>
+          </div>
+          <button type="submit" className="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Update</button>
+        </form>
     </div>
   );
 }
