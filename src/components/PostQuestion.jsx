@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
+  const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [url, setUrl] = useState("");
   const [devUrl, setDevUrl] = useState("");
@@ -33,28 +35,39 @@ const PostQuestion = () => {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const docRef = await addDoc(collection(db, "questions"), {
-        question,
-        url,
-        devUrl,
-        details,
-        skills,
-        timestamp: new Date(),
-        author,
-      });
-      console.log("Document written with ID: ", docRef.id);
-      setQuestion("");
-      setUrl("");
-      setDevUrl("");
-      setDetails("");
-      setSkills("");
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // 題名とスキルのチェック
+  if (!question.trim() || !details.trim()) {
+    alert("題名と詳細は必須です");
+    return; // 題名とスキルが空の場合、送信をブロック
+  }
+
+  try {
+    const docRef = await addDoc(collection(db, "questions"), {
+      question,
+      url,
+      devUrl,
+      details,
+      skills,
+      timestamp: new Date(),
+      author,
+    });
+    console.log("Document written with ID: ", docRef.id);
+    setQuestion("");
+    setUrl("");
+    setDevUrl("");
+    setDetails("");
+    setSkills("");
+
+    //ページをリダイレクト
+    navigate("/");
+    
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+};
 
   return (
     <div>
@@ -64,20 +77,20 @@ const PostQuestion = () => {
         <h2 className="text-2xl font-bold text-gray-800">解決したい問題を投稿する</h2>
         <div className="space-y-2">
           <label htmlFor="question" className="text-lg font-medium text-gray-700">
-            お題名
+            課題
           </label>
           <input
             id="question"
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="タイトルを入力してください"
+            placeholder="(入力必須)タイトルを入力してください"
             className="w-full p-3 border rounded-md focus:ring focus:ring-opacity-50 focus:ring-blue-500"
           />
         </div>
         <div className="space-y-2">
           <label htmlFor="url" className="text-lg font-medium text-gray-700">
-            ごURL
+            URL
           </label>
           <input
             id="url"
@@ -90,7 +103,7 @@ const PostQuestion = () => {
         </div>
         <div className="space-y-2">
           <label htmlFor="devUrl" className="text-lg font-medium text-gray-700">
-            開発用のごURL (Github等)
+            開発用のURL (Github等)
           </label>
           <input
             id="devUrl"
@@ -103,20 +116,20 @@ const PostQuestion = () => {
         </div>
         <div className="space-y-2">
           <label htmlFor="details" className="text-lg font-medium text-gray-700">
-            ご詳細
+            詳細
           </label>
           <textarea
             id="details"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            placeholder="質問の詳細を入力してください"
+            placeholder="(入力必須)質問の詳細を入力してください"
             className="w-full p-3 border rounded-md focus:ring focus:ring-opacity-50 focus:ring-blue-500"
             rows="4"
           />
         </div>
         <div className="space-y-2">
           <label htmlFor="skills" className="text-lg font-medium text-gray-700">
-            必要なお技術
+            必要なスキル
           </label>
           <input
             id="skills"
