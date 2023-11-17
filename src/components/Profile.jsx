@@ -50,35 +50,45 @@ const Profile = () => {
     setShowConfirmation(!showConfirmation);
   };
 
-
   return (
     <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg bg-[#222831] text-white">
       {userProfile && (
         <div className="space-y-4">
-          <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} className="w-32 h-32 rounded-full mx-auto"/>
-          <h1 className="text-2xl font-bold text-center">名前: {userProfile.displayName}</h1>
+          <img
+            src={userProfile.photoURL}
+            alt={`${userProfile.displayName}'s profile`}
+            className="w-32 h-32 rounded-full mx-auto"
+          />
+          <h1 className="text-2xl font-bold text-center">
+            名前: {userProfile.displayName}
+          </h1>
           <p className="text-center">自己紹介: {userProfile.bio}</p>
-          
+
           <div>
             <h2 className="text-xl font-semibold">スキル</h2>
             <div className="divide-y divide-gray-200">
               {userProfile.skills.map((skillObj, index) => (
-                <div key={index} className="py-4">
-                  <div className="flex justify-between">
-                    <span className="font-medium">{skillObj.name}</span>
-                    <span>{`レベル: ${skillObj.level}`}</span>
-                  </div>
-                  {renderSkillLevel(skillObj.level)}
-                </div>
+                <li key={index} className="py-1">{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
               ))}
             </div>
           </div>
-          <p>{userProfile.position}</p>
-          {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
-            <button onClick={handleEdit}>Edit Profile</button>
+          <p>役職: {userProfile.position}</p>
+          {auth.currentUser?.uid === userId && (
+            <div className="flex justify-center">
+              <button
+                onClick={handleEdit}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+              >
+                プロフィールの編集
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                ログアウト
+              </button>
+            </div>
           )}
-          <p>
-            <button onClick={handleLogout}> Logout</button></p>
         </div>
       )}
     </div>
