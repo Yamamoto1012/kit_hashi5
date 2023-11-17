@@ -35,14 +35,23 @@ const Profile = () => {
       .catch((error) => {
         console.log("Logout error: ", error.message);
       });
-  };
+  }
+
+    // スキルレベルを視覚化するバーのUIを生成する関数
+    const renderSkillLevel = (level) => {
+      return (
+        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+          <div className={`bg-green-500 h-2.5 rounded-full`} style={{ width: `${level*20}%` }}></div>
+        </div>
+      );
+    };
 
   const toggleConfirmation = () => {
     setShowConfirmation(!showConfirmation);
   };
 
   return (
-    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
+    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg bg-[#222831] text-white">
       {userProfile && (
         <div className="space-y-4">
           <img
@@ -57,14 +66,11 @@ const Profile = () => {
 
           <div>
             <h2 className="text-xl font-semibold">スキル</h2>
-            <ul className="list-disc pl-5 border">
+            <div className="divide-y divide-gray-200">
               {userProfile.skills.map((skillObj, index) => (
-                <li
-                  key={index}
-                  className="py-1"
-                >{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+                <li key={index} className="py-1">{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
               ))}
-            </ul>
+            </div>
           </div>
           <p>役職: {userProfile.position}</p>
           {auth.currentUser?.uid === userId && (

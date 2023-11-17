@@ -60,29 +60,69 @@ const CreateProfile = () => {
             <button type="button" onClick={addSkill}>スキルを追加</button>
         </div>
     )
+    
+    const displaySkills = (
+        <ul>
+            {skills.map((skill, index) => (
+                <li key={index}>{`${skill.name} (レベル: ${skill.level})`}</li>
+            ))}
+        </ul>
+    )
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
+        <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+      <div className="max-w-md w-full mx-auto">
+        <div className="bg-white p-8 border border-gray-300 rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <h2 className="text-2xl font-bold text-center">新規プロフィール作成</h2>
+            <div>
+              <label htmlFor="displayName" className="text-sm font-bold text-gray-600 block">表示名</label>
+              <input
+                id="displayName"
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="Display Name"
-            />
-            <textarea
+                placeholder="表示名を入力してください"
+                className="w-full p-2 border border-gray-300 rounded mt-1"
+              />
+            </div>
+            <div>
+              <label htmlFor="bio" className="text-sm font-bold text-gray-600 block">自己紹介</label>
+              <textarea
+                id="bio"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-                placeholder="Bio"
-            />
-            {skillSelectors}
-            <input
+                placeholder="自己紹介を入力してください"
+                className="w-full p-2 border border-gray-300 rounded mt-1"
+                rows="3"
+              />
+            </div>
+            <div>
+              <label htmlFor="skills" className="text-sm font-bold text-gray-600 block">スキル</label>
+              {skillSelectors}
+              {displaySkills}
+            </div>
+            <div>
+              <label htmlFor="position" className="text-sm font-bold text-gray-600 block">ポジション</label>
+              <input
+                id="position"
                 type="text"
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
-                placeholder="Position"
-            />
-            <button type="submit">Create Profile</button>
-        </form>
+                placeholder="ポジションを入力してください"
+                className="w-full p-2 border border-gray-300 rounded mt-1"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              プロフィールを作成
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
     )
 }
 
