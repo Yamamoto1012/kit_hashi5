@@ -21,12 +21,12 @@ const MembersPage = () => {
 
     return (
         <div>
-            <h1>メンバーリスト</h1>
+            <h1 className= "text-white text-2xl">メンバーリスト</h1>
             <div className="grid grid-cols-4 gap-4">
                 {members.map(member => (
                     <Link to={`/users/${member.id}`} key={member.id} className="flex flex-col items-center">
                         <img src={member.photoURL} alt={`${member.displayName}のプロフィール画像`} className="w-24 h-24 rounded-full" />
-                        <p>{member.displayName}</p>
+                        <div className= "text-white">{member.displayName}</div>
                     </Link>
                 ))}
             </div>
