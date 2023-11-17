@@ -63,7 +63,7 @@ const Profile = () => {
             <button onClick={handleEdit}>Edit Profile</button>
           )}
           <p>
-            <button onClick= {Logout}> Logout</button></p>
+            <button onClick={handleLogout}> Logout</button></p>
         </div>
       )}
     </div>
