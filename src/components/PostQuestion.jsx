@@ -57,7 +57,9 @@ const PostQuestion = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
+    <div>
+      {auth.currentUser ? (
+            <div className="max-w-2xl mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
       <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-2xl font-bold text-gray-800">解決したい問題を投稿する</h2>
         <div className="space-y-2">
@@ -132,6 +134,12 @@ const PostQuestion = () => {
           送信
         </button>
       </form>
+    </div>
+          ) : (
+            <div className="text-5xl text-red-600">
+              ログインしてからこいやコラ
+            </div>
+          )}
     </div>
   );
 };
