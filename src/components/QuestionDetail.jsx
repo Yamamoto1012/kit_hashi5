@@ -36,7 +36,7 @@ const QuestionDetail = () => {
     return (
         <div className="max-w-4xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
             {question && (
-                <div className="space-y-4 border">
+                <div className="space-y-4 border border-spacing-1">
                     <h1 className="text-3xl font-bold">{question.title}</h1>
                     <p><strong>URL:</strong> {question.url}</p>
                     <p><strong>Development URL:</strong> {question.devUrl}</p>
