@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { auth } from '../../firebase';
 import Login from '../auth/Login';
 
@@ -34,7 +34,7 @@ const Navbar = () => {
           </button>
         </div>
 
-         {/* メニュー項目 */}
+        {/* メニュー項目 */}
         <div className={`flex space-x-4 justify-center items-center ${isMenuOpen ? 'flex' : 'hidden'} md:flex md:space-x-4 md:justify-center md:items-center`}>
           <div className="text-lg font-normal">
             <Link className="hover:text-[#00ADB5] transition duration-300" to="member">
@@ -46,13 +46,19 @@ const Navbar = () => {
               お知らせ
             </Link>
           </div>
-          <div className="text-lg font-normal">
-            <Link className="hover:text-[#00ADB5] transition duration-300" to="post">
+          {auth.currentUser ? (
+            <div className="text-lg font-normal">
+              <Link className="hover:text-[#00ADB5] transition duration-300" to="post">
+                投稿
+              </Link>
+            </div>
+          ) : (
+            <div className="text-lg font-normal opacity-50 cursor-not-allowed">
               投稿
-            </Link>
-          </div>
+            </div>
+          )}
           {!auth.currentUser ? (
-              <Login />
+            <Login />
           ) : (
             <img
               src={auth.currentUser.photoURL}
@@ -60,7 +66,7 @@ const Navbar = () => {
               onClick={handleProfileClick}
               className="rounded-full w-10 h-10 object-cover border-2 border-white cursor-pointer"
             />
-          )}    
+          )}
         </div>
       </div>
     </nav>
