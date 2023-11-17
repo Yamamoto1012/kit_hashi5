@@ -4,10 +4,8 @@ import { getDocs, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import AnswerQuestion from "./AnswerQuestion";
 
 const QuestionList = () => {
-  const { userId } = useParams();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
