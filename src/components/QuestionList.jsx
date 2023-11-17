@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import DeleteQuestion from "./DeleteQuestion";
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AnswerQuestion from "./AnswerQuestion";
 
 const QuestionList = () => {
+  const { userId } = useParams();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -57,9 +59,11 @@ const QuestionList = () => {
           <div>
               {question.details}
             </div>
-          <div className="flex justify-between items-center">
+            {auth.currentUser?.uid === question.author.uid && (
+             <div>
             <DeleteQuestion questionId={question.id} />
           </div>
+          )}
         </div>
       ))}
     </div>
