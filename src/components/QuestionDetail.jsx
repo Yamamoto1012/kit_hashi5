@@ -34,10 +34,10 @@ const QuestionDetail = () => {
     }
 
     return (
-        <div>
+        <div className="max-w-4xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
             {question && (
-                <div>
-                    <h1>{question.title}</h1>
+                <div className="space-y-4 border">
+                    <h1 className="text-3xl font-bold">{question.title}</h1>
                     <p><strong>URL:</strong> {question.url}</p>
                     <p><strong>Development URL:</strong> {question.devUrl}</p>
                     <p><strong>Details:</strong> {question.details}</p>
@@ -45,20 +45,19 @@ const QuestionDetail = () => {
 
                     {question && user && question.author && (
                         question.author.uid === user.uid && (
-                            <button onClick={deleteQuestion}>Delete Question</button>
+                            <button onClick={deleteQuestion} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">Delete Question</button>
                         )
                     )}
 
-                    <AnswerQuestion questionId={questionId}/>
+                    <AnswerQuestion questionId={questionId} />
                 </div>
             )}
-            <div>
-                <h2>Answers:</h2>
+            <div className="mt-8">
+                <h2 className="text-2xl font-semibold">Answers:</h2>
                 {answers.map(answer => (
-                    <div key={answer.id}>
-                        <img src={answer.userImage} alt={`${answer.username}'s profile`} />
-                        <p><strong>{answer.username}:</strong>
-                        {answer.text}</p>
+                    <div key={answer.id} className="mt-4 flex items-center space-x-3">
+                        <img src={answer.userImage} alt={`${answer.username}'s profile`} className="w-10 h-10 rounded-full"/>
+                        <p><strong>{answer.username}:</strong> {answer.text}</p>
                     </div>
                 ))}
             </div>

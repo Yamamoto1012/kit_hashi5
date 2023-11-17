@@ -5,7 +5,9 @@ import SearchQuestionButton from './SearchQuestionButton'
 const Home = () => {
   return (
     <>
-      <h1>Question</h1>
+    <div className='w-full shadow-md h-8'>
+      <h1 className='text-white text-center'>Question</h1>
+    </div>
       <QuestionList />
       <SearchQuestionButton />
     </>

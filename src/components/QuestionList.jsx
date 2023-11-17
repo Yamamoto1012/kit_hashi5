@@ -25,7 +25,7 @@ const QuestionList = () => {
       {questions.map((question) => (
         <div
           key={question.id}
-          className="mb-4 p-4 border border-gray-300 rounded-lg"
+          className="mb-4 p-4 border bg-white border-gray-300 rounded-lg"
         >
           <div className="flex items-center mb-2">
             {/* ユーザー画像をクリックするとプロフィールページに移動 */}
