@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { signOut } from "firebase/auth";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -23,9 +24,23 @@ const Profile = () => {
     navigate("/edit-profile");
   };
 
-  const Logout = () => {
-    navigate("/Logout")
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("User logged out");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log("Logout error: ", error.message);
+      });
   }
+
+  const toggleConfirmation = () => {
+    setShowConfirmation(!showConfirmation);
+  };
+
 
   return (
     <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
@@ -43,11 +58,12 @@ const Profile = () => {
               ))}
             </ul>
           </div>
-          <p className="text-center font-medium">{userProfile.position}</p>
-          {auth.currentUser?.uid === userId && (
-            <button onClick={handleEdit} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full mt-4">Edit Profile</button>
+          <p>{userProfile.position}</p>
+          {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
+            <button onClick={handleEdit}>Edit Profile</button>
           )}
-          <button onClick= {Logout} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 w-full mt-4">Logout</button>
+          <p>
+            <button onClick= {Logout}> Logout</button></p>
         </div>
       )}
     </div>
