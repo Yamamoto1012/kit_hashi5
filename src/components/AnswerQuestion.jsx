@@ -33,6 +33,7 @@ const AnswerQuestion = ({ questionId }) => {
 
         await addDoc(collection(db, 'questions', questionId, 'answers'), answerData);
         setAnswerText('');
+        window.location.reload();
     };
 
     return (
