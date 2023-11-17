@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, deleteDoc, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, query, orderBy } from 'firebase/firestore';
 import AnswerQuestion from './AnswerQuestion';
 
 const QuestionDetail = () => {
@@ -18,7 +18,8 @@ const QuestionDetail = () => {
                 setQuestion(questionDoc.data());
             }
 
-            const querySnapshot = await getDocs(collection(questionDocRef, 'answers'));
+            const answerQuery = query(collection(questionDocRef, 'answers'), orderBy('createdAt', 'asc'));
+            const querySnapshot = await getDocs(answerQuery);
             const answerArray = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
