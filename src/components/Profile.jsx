@@ -37,13 +37,22 @@ const Profile = () => {
       });
   }
 
+    // スキルレベルを視覚化するバーのUIを生成する関数
+    const renderSkillLevel = (level) => {
+      return (
+        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+          <div className={`bg-green-500 h-2.5 rounded-full`} style={{ width: `${level*20}%` }}></div>
+        </div>
+      );
+    };
+
   const toggleConfirmation = () => {
     setShowConfirmation(!showConfirmation);
   };
 
 
   return (
-    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg text-white">
+    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg bg-[#222831] text-white">
       {userProfile && (
         <div className="space-y-4">
           <img src={userProfile.photoURL} alt={`${userProfile.displayName}'s profile`} className="w-32 h-32 rounded-full mx-auto"/>
@@ -52,11 +61,17 @@ const Profile = () => {
           
           <div>
             <h2 className="text-xl font-semibold">スキル</h2>
-            <ul className="list-disc pl-5 border">
+            <div className="divide-y divide-gray-200">
               {userProfile.skills.map((skillObj, index) => (
-                <li key={index} className="py-1">{`${skillObj.name} (レベル: ${skillObj.level})`}</li>
+                <div key={index} className="py-4">
+                  <div className="flex justify-between">
+                    <span className="font-medium">{skillObj.name}</span>
+                    <span>{`レベル: ${skillObj.level}`}</span>
+                  </div>
+                  {renderSkillLevel(skillObj.level)}
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
           <p>{userProfile.position}</p>
           {auth.currentUser?.uid === userId && (  // ログイン中のユーザーが自分のプロフィールを見ている場合のみ編集ボタンを表示
