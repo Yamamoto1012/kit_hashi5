@@ -2,10 +2,13 @@ version: '3.8'
 
 services:
   react_app:
-    container_name: react_firebase_tailwind_app
+    image: hashi5_image
+    container_name: hashi5
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - ./src/.env.local
     volumes:
       - .:/app
       - /app/node_modules
