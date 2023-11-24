@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 import { collection, deleteDoc, doc, getDoc, getDocs } from 'firebase/firestore';
 import AnswerQuestion from './AnswerQuestion';
+import DeleteAnswer from './DeleteAnswer';
 
 const QuestionDetail = () => {
     const { questionId } = useParams();
     const [question, setQuestion] = useState(null);
     const [answers, setAnswers] = useState([]);
-    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const fetchQuestionAndAnswers = async () => {
@@ -33,6 +33,19 @@ const QuestionDetail = () => {
         await deleteDoc(questionDocRef);
     }
 
+    const deleteAnswer = async (answerId) => {
+        try {
+            const answerDocRef = doc(db, 'questions', questionId, 'answers', answerId); // 回答のドキュメントへの参照
+            await deleteDoc(answerDocRef);
+
+            // 削除された回答を除外した新しい回答のリストを作成
+            const updatedAnswers = answers.filter(answer => answer.id !== answerId);
+            setAnswers(updatedAnswers);
+        } catch (error) {
+            console.error('Error deleting answer: ', error);
+        }
+    };
+
     return (
         <div className="max-w-4xl mx-auto my-8">
             {question && (
@@ -43,15 +56,20 @@ const QuestionDetail = () => {
                     <p className="py-2"><strong>詳細:</strong> {question.details}</p>
                     <p className="pb-2"><strong>必要スキル:</strong> {question.skills}</p>
 
-                    {question && user && question.author && (
-                        question.author.uid === user.uid && (
+                    { auth.currentUser && (
+                        question.author.uid === auth.currentUser?.uid && (
                             <button onClick={deleteQuestion} className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-lg">
                                 Delete Question
                             </button>
                         )
                     )}
 
-                    <AnswerQuestion questionId={questionId} />
+                    {auth.currentUser ? (
+                        <AnswerQuestion questionId={questionId} />
+                    ) : (
+                        <div>回答を送信するにはログインをしてください</div>
+                    )}
+
                 </div>
             )}
             <div className="mt-8">
@@ -59,10 +77,13 @@ const QuestionDetail = () => {
                 {answers.map(answer => (
                     <div key={answer.id} className="bg-white text-gray-700 p-4 rounded-lg shadow-lg mb-4">
                         <div className="flex items-center space-x-3">
-                            <img src={answer.userImage} alt={`${answer.username}'s profile`} className="w-10 h-10 rounded-full"/>
+                            <img src={answer.userImage} alt={`${answer.username}'s profile`} className="w-10 h-10 rounded-full" />
                             <div>
                                 <p className="font-semibold">{answer.username}</p>
                                 <p>{answer.text}</p>
+                                {auth.currentUser?.uid === answer.userId && (
+                                    <DeleteAnswer answerId={answer.id} onDelete={() => deleteAnswer(answer.id)} />
+                                )}
                             </div>
                         </div>
                     </div>
