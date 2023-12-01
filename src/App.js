@@ -11,6 +11,7 @@ import EditProfile from './components/EditProfile';
 import MembersPage from './components/MembersPage';
 import SearchQuestionButton from './components/SearchQuestionButton';
 import SearchResult from './components/SerachResult';
+import MessagesPage from './components/MessagePage';
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/questions/:questionId" element={< QuestionDetail />} />
         <Route path="/" element={<SearchQuestionButton />} />
         <Route path="/search-results" element={<SearchResult />} />
+        <Route path="/message" element={<MessagesPage />} />
       </Routes>
     </Router>
   );
