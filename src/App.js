@@ -12,6 +12,7 @@ import MembersPage from './components/MembersPage';
 import SearchQuestionButton from './components/SearchQuestionButton';
 import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
+import Announcement from './components/Announcement';
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<SearchQuestionButton />} />
         <Route path="/search-results" element={<SearchResult />} />
         <Route path="/message" element={<MessagesPage />} />
+        <Route path="/announcement" element={<Announcement />}/>
       </Routes>
     </Router>
   );
