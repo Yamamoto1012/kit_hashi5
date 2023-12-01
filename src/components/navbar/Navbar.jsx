@@ -42,6 +42,11 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="text-lg font-normal">
+            <Link className="hover:text-[#00ADB5] transition duration-300" to="message">
+              メッセージ
+            </Link>
+          </div>
+          <div className="text-lg font-normal">
             <Link className="hover:text-[#00ADB5] transition duration-300" to="announcement">
               お知らせ
             </Link>
