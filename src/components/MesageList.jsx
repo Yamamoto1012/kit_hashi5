@@ -1,49 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import {
   collection,
+  doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
-  doc,
-  getDoc,
+  where,
 } from "firebase/firestore";
 import AddMessage from "./AddMesage";
 
 const MessageList = ({ userId, receiverId }) => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState({});
+  const currentUserId = auth.currentUser.uid;
 
   useEffect(() => {
-    // ユーザー情報を取得
-    const fetchUser = async (userId) => {
-      const docRef = doc(db, "users", userId);
-      const docSnap = await getDoc(docRef);
-      return docSnap.exists() ? docSnap.data() : null;
-    };
-
     const messagesQuery = query(
       collection(db, "messages"),
+      where("senderId", "in", [currentUserId, receiverId]),
+      where("receiverId", "in", [currentUserId, receiverId]),
       orderBy("timestamp", "asc")
     );
 
-    const unsubscribe = onSnapshot(messagesQuery, async (QuerySnapshot) => {
-      const messages = [];
-      const usersTemp = { ...users };
-
-      for (const doc of QuerySnapshot.docs) {
-        const data = doc.data();
-        if (!usersTemp[data.senderId]) {
-          usersTemp[data.senderId] = await fetchUser(data.senderId);
-        }
-        messages.push({ id: doc.id, ...data });
-      }
-
-      setUsers(usersTemp);
-      setMessages(messages);
+    const unsubscribe = onSnapshot(messagesQuery, (querySnapshot) => {
+      const filteredMessages = querySnapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(message => 
+          (message.senderId === currentUserId && message.receiverId === receiverId) ||
+          (message.senderId === receiverId && message.receiverId === currentUserId)
+        );
+      setMessages(filteredMessages);
     });
 
     return unsubscribe;
+  }, [currentUserId, receiverId]);
+
+  useEffect(() => {
+    const fetchUser = async (userId) => {
+      const userDoc = await getDoc(doc(db, "users", userId));
+      if (userDoc.exists()) {
+        setUsers(prevUsers => ({ ...prevUsers, [userId]: userDoc.data() }));
+      }
+    };
+  
+    fetchUser(userId);
+    fetchUser(receiverId);
   }, [userId, receiverId]);
 
   return (
