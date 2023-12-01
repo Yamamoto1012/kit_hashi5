@@ -12,7 +12,7 @@ const MessagesPage = () => {
   };
 
   return (
-    <div>
+    <div className='flex'>
       <MessageMember onUserSelect={handleUserSelect} />
       {selectedUserId && <MessageList userId={auth.currentUser.uid} receiverId={selectedUserId} />}
     </div>
