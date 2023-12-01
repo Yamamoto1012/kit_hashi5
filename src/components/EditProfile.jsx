@@ -36,8 +36,6 @@ const EditProfile = () => {
 
   //新しいスキルを追加する関数
   const addSkill = () => {
-    if (newSkillName.trim() === '') return; // 空のスキル名は追加しない
-
     const newSkill = { name: newSkillName, level: newSkillLevel };
     const updatedSkills = [...skills, newSkill];
     setSkills(updatedSkills);
@@ -63,7 +61,7 @@ const EditProfile = () => {
     setSkills(updatedSkills);
   };
 
-  // スキル編集部分の UI
+// スキル編集部分の UI
 const skillEditUI = skills.map((skill, index) => (
   <div key={index} className="flex items-center space-x-2">
     <input
@@ -78,6 +76,7 @@ const skillEditUI = skills.map((skill, index) => (
       onChange={(e) => updateSkill(index, skill.name, parseInt(e.target.value))}
       className="p-2 border border-gray-300 rounded-md"
     >
+      <option value="">レベルなし</option> {/* スキルレベルなしのオプション */}
       {[1, 2, 3, 4, 5].map((level) => (
         <option key={level} value={level}>{level}</option>
       ))}
@@ -89,17 +88,27 @@ const skillEditUI = skills.map((skill, index) => (
 ));
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const userProfileRef = doc(db, 'users', user.uid);
-    await updateDoc(userProfileRef, {
-      displayName,
-      bio,
-      skills,
-      position,
-    });
-    navigate(`/users/${user.uid}`);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // スキル名が空かどうかをチェック
+  const isSkillNameEmpty = skills.some((skill) => skill.name.trim() === '');
+
+  if (isSkillNameEmpty) {
+    alert('スキル名を入力してください');
+    return; // スキル名が空の場合、以降の処理を停止します
   }
+
+  const userProfileRef = doc(db, 'users', user.uid);
+  await updateDoc(userProfileRef, {
+    displayName,
+    bio,
+    skills,
+    position,
+  });
+  navigate(`/users/${user.uid}`);
+}
+
 
   return (
     <div className="max-w-md mx-auto bg-[#222831] p-8 border border-gray-300 rounded-lg shadow-sm mt-8">
