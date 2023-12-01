@@ -37,14 +37,18 @@ const Profile = () => {
       });
   }
 
-    // スキルレベルを視覚化するバーのUIを生成する関数
-    const renderSkillLevel = (level) => {
+  // スキルレベルを視覚化するバーのUIを生成する関数
+  const renderSkillLevel = (level) => {
+    if (level) {
       return (
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-          <div className={`bg-green-500 h-2.5 rounded-full`} style={{ width: `${level*20}%` }}></div>
+          <div className={`bg-green-500 h-2.5 rounded-full`} style={{ width: `${level * 20}%` }}></div>
         </div>
       );
-    };
+    } else {
+      return <p className="text-gray-400">レベルなし</p>;
+    }
+  };
 
   const toggleConfirmation = () => {
     setShowConfirmation(!showConfirmation);
@@ -69,11 +73,13 @@ const Profile = () => {
             <div className="divide-y divide-gray-200">
               {userProfile.skills.map((skillObj, index) => (
                 <div key={index} className="py-4">
-                  <div className="flex justify-between">
-                    <span className="font-medium">{skillObj.name}</span>
-                    <span>{`レベル: ${skillObj.level}`}</span>
-                  </div>
-                  {renderSkillLevel(skillObj.level)}
+                  <span className="font-medium">{skillObj.name}</span>
+                  {skillObj.level >= 1 && (
+                    <div>
+                      {`レベル: ${skillObj.level}`}
+                      {renderSkillLevel(skillObj.level)}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

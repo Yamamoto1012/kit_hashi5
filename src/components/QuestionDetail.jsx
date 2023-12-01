@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { collection, deleteDoc, doc, getDoc, getDocs, query, orderBy } from 'firebase/firestore';
 import AnswerQuestion from './AnswerQuestion';
@@ -9,6 +9,7 @@ const QuestionDetail = () => {
     const { questionId } = useParams();
     const [question, setQuestion] = useState(null);
     const [answers, setAnswers] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuestionAndAnswers = async () => {
@@ -32,6 +33,7 @@ const QuestionDetail = () => {
     const deleteQuestion = async () => {
         const questionDocRef = doc(db, 'questions', questionId);
         await deleteDoc(questionDocRef);
+        navigate("/");
     }
 
     const deleteAnswer = async (answerId) => {
