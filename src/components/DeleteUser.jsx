@@ -47,8 +47,8 @@ const DeleteUser = ({ uid }) => {
                         <div className="absolute inset-0 bg-black opacity-50"></div>
                     </div>
                     <div className="z-20 bg-white p-4 rounded-lg shadow-md max-w-sm mx-auto">
-                        <h3 className="text-lg font-semibold mb-2">本当に削除しますか？</h3>
-                        <p className="mb-4">この操作は取り消せません。</p>
+                        <h3 className="text-lg font-semibold mb-2 text-black">本当に削除しますか？</h3>
+                        <p className="mb-4 text-black">この操作は取り消せません。</p>
                         <div className="flex justify-end">
                             <button onClick={handleCancel} className="text-gray-500 mr-2">キャンセル</button>
                             <button onClick={handleDelete} className="text-red-500">削除する</button>
