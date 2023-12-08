@@ -14,7 +14,7 @@ const MessagesPage = () => {
 
   return (
     <div>{ !auth.currentUser ? (
-      <div>
+      <div className="text-2xl, bg-red-500">
         ログインしてください
       </div>
     ) :(
