@@ -14,8 +14,8 @@ const EditProfile = () => {
   const [position, setPosition] = useState('');
   const navigate = useNavigate();
   const user = auth.currentUser;
-  const [newSkillName, setNewSkillName] = useState(''); // 追加する新しいスキルの名前
-  const [newSkillLevel, setNewSkillLevel] = useState(1); // 追加する新しいスキルのレベル  
+  const [newSkillName, setNewSkillName] = useState(''); 
+  const [newSkillLevel, setNewSkillLevel] = useState(1); 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -97,6 +97,11 @@ const handleSubmit = async (e) => {
   if (isSkillNameEmpty) {
     alert('スキル名を入力してください');
     return; // スキル名が空の場合、以降の処理を停止します
+  }
+  
+  if (displayName.trim() === '') {
+    alert('表示名を入力してください');
+    return;
   }
 
   const userProfileRef = doc(db, 'users', user.uid);

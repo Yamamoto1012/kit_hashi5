@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 const skillsOptions = [
   'プログラミング', 'デザイン', 'プロジェクト管理'
-];
+]
 
 const CreateProfile = () => {
-  const navigate = useNavigate();
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
   const [skills, setSkills] = useState([]);
-  const [selectedSkill, setSelectedSkill] = useState('');
-  const [skillLevel, setSkillLevel] = useState('1');
   const [position, setPosition] = useState('');
+  const navigate = useNavigate();
+  const user = auth.currentUser;
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillLevel, setNewSkillLevel] = useState(1);
 
   const addSkill = () => {
-    if (newSkillName.trim() === '') {
-      alert('スキル名を入力してください');
-      return;
-    }
-
     const newSkill = { name: newSkillName, level: newSkillLevel };
     const updatedSkills = [...skills, newSkill];
     setSkills(updatedSkills);
-    setNewSkillName('');
-    setNewSkillLevel(1);
+    setNewSkillName(''); // 入力フォームをリセット
+    setNewSkillLevel(1); // レベルもリセット
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
+
+    const isSkillNameEmpty = skills.some((skill) => skill.name.trim() === '');
+
+    if (isSkillNameEmpty) {
+      alert('スキル名を入力してください');
+      return; // スキル名が空の場合、以降の処理を停止します
+    }
+
+    if (displayName.trim() === '') {
+      alert('表示名を入力してください');
+      return;
+    }
+
+
 
     if (user) {
       const userProfileRef = doc(db, 'users', user.uid);
@@ -44,12 +52,54 @@ const CreateProfile = () => {
         bio,
         skills,
         position,
-        photoURL: user.photoURL
+        photoURL: user.photoURL  // Googleアカウントから取得したプロフィール画像URLを保存
       });
 
       navigate(`/users/${user.uid}`);
     }
   };
+
+  const updateSkill = (index, newSkill, newLevel) => {
+    const updatedSkills = skills.map((skill, i) => {
+      if (i === index) {
+        return { ...skill, name: newSkill, level: newLevel };
+      }
+      return skill;
+    });
+    setSkills(updatedSkills);
+  };
+
+
+  const removeSkill = (index) => {
+    const updatedSkills = skills.filter((_, i) => i !== index);
+    setSkills(updatedSkills);
+  };
+
+  const skillEditUI = skills.map((skill, index) => (
+    <div key={index} className="flex items-center space-x-2">
+      <input
+        type="text"
+        value={skill.name}
+        onChange={(e) => updateSkill(index, e.target.value, skill.level)}
+        placeholder="スキル名"
+        className="p-2 border border-gray-300 rounded-md"
+      />
+      <select
+        value={skill.level}
+        onChange={(e) => updateSkill(index, skill.name, parseInt(e.target.value))}
+        className="p-2 border border-gray-300 rounded-md"
+      >
+        <option value="">レベルなし</option> {/* スキルレベルなしのオプション */}
+        {[1, 2, 3, 4, 5].map((level) => (
+          <option key={level} value={level}>{level}</option>
+        ))}
+      </select>
+      <button type="button" onClick={() => removeSkill(index)} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300 ease-in-out">
+        削除
+      </button>
+    </div>
+  ));
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
@@ -79,36 +129,18 @@ const CreateProfile = () => {
                 rows="3"
               />
             </div>
-            <div>
-              <label htmlFor="skills" className="text-sm font-bold text-gray-600 block">スキル</label>
-              <div>
-                <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)}>
-                  <option value="">スキルを選択してください</option>
-                  {skillsOptions.map((skill, index) => (
-                    <option key={index} value={skill}>{skill}</option>
-                  ))}
-                </select>
-                <select value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)}>
-                  {[1, 2, 3, 4, 5].map((level) => (
-                    <option key={level} value={level}>{level}</option>
-                  ))}
-                </select>
-                <button type="button" onClick={addSkill}>スキルを追加</button>
-              </div>
-              <ul>
-                {skills.map((skill, index) => (
-                  <li key={index}>{`${skill.name} (レベル: ${skill.level})`}</li>
-                ))}
-              </ul>
+            <div className="space-y-2">
+              {skillEditUI}
             </div>
+            <button type="button" onClick={addSkill} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">新しいスキルを追加</button>
             <div>
-              <label htmlFor="position" className="text-sm font-bold text-gray-600 block">ポジション</label>
+              <label htmlFor="position" className="text-sm font-bold text-gray-600 block">役職</label>
               <input
                 id="position"
                 type="text"
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
-                placeholder="ポジションを入力してください"
+                placeholder="役職を入力してください"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
               />
             </div>
@@ -122,7 +154,7 @@ const CreateProfile = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default CreateProfile;
