@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { signOut } from "firebase/auth";
+import DeleteUser from "./DeleteUser";
 
 const Profile = () => {
   const { userId } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -36,6 +38,9 @@ const Profile = () => {
         console.log("Logout error: ", error.message);
       });
   }
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
 
   // スキルレベルを視覚化するバーのUIを生成する関数
   const renderSkillLevel = (level) => {
@@ -86,19 +91,53 @@ const Profile = () => {
           </div>
           <p>役職: {userProfile.position}</p>
           {auth.currentUser?.uid === userId && (
-            <div className="flex justify-center">
+            <div className="relative inline-block">
               <button
-                onClick={handleEdit}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+                onClick={toggleOptions}
+                className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-3 rounded-full focus:outline-none"
               >
-                プロフィールの編集
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 19H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2z"
+                  />
+                </svg>
               </button>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              >
-                ログアウト
-              </button>
+              {showOptions && (
+                <div className="absolute top-0 left-10 z-10 bg-gray-800 text-white rounded-md py-2 shadow-lg whitespace-nowrap">
+                  <button
+                    onClick={handleEdit}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"
+                  >
+                    プロフィールの編集
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"
+                  >
+                    ログアウト
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"
+                  >
+                    <DeleteUser uid={auth.currentUser.uid}/>
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
