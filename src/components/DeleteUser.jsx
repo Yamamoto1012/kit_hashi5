@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from "firebase/auth";
 
-const DeleteQuestion = ({ questionId }) => {
+const DeleteUser = ({ uid }) => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
@@ -14,23 +15,32 @@ const DeleteQuestion = ({ questionId }) => {
     const handleCancel = () => {
         setShowModal(false);
     };
+    const handleLogout = () => {
+        signOut(auth)
+            .then(() => {
+                console.log("User logged out");
+                navigate('/');
+            })
+            .catch((error) => {
+                console.log("Logout error: ", error.message);
+            });
+    }
 
     const handleDelete = async () => {
         try {
-            const docRef = doc(db, 'questions', questionId);
+            const docRef = doc(db, 'users', uid);
             await deleteDoc(docRef);
-            console.log('Document deleted');
+            console.log('User deleted');
             setShowModal(false);
-            // 削除後の追加処理をここに追加することもできます
-            navigate('/');
+            handleLogout();
         } catch (error) {
-            console.error('Error deleting document: ', error);
+            console.error('Error deleting user: ', error);
         }
     };
 
     return (
         <div className="inline-block">
-            <button onClick={confirmDelete} className="text-red-500">Delete</button>
+            <button onClick={confirmDelete} className="text-red-500">アカウントを削除する</button>
             {showModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center">
                     <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -50,4 +60,4 @@ const DeleteQuestion = ({ questionId }) => {
     );
 };
 
-export default DeleteQuestion;
+export default DeleteUser;
