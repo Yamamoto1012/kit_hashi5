@@ -57,11 +57,6 @@ const QuestionList = () => {
           <div>
               {question.details}
             </div>
-            {auth.currentUser?.uid === question.author.uid && (
-             <div>
-            <DeleteQuestion questionId={question.id} />
-          </div>
-          )}
         </div>
       ))}
     </div>

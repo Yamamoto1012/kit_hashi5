@@ -40,12 +40,18 @@ const Navbar = () => {
             <Link className="hover:text-[#00ADB5] transition duration-300" to="member">
               メンバー
             </Link>
-          </div>
-          <div className="text-lg font-normal">
-            <Link className="hover:text-[#00ADB5] transition duration-300" to="message">
+          </div>        
+          {auth.currentUser ? (
+            <div className="text-lg font-normal">
+              <Link className="hover:text-[#00ADB5] transition duration-300" to="message">
+                メッセージ
+              </Link>
+            </div>
+          ) : (
+            <div className="text-lg font-normal opacity-50 cursor-not-allowed">
               メッセージ
-            </Link>
-          </div>
+            </div>
+          )}
           <div className="text-lg font-normal">
             <Link className="hover:text-[#00ADB5] transition duration-300" to="announcement">
               お知らせ
