@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
-const skillsOptions = [
-  'プログラミング', 'デザイン', 'プロジェクト管理'
-]
 
 const CreateProfile = () => {
   const [displayName, setDisplayName] = useState('');
@@ -13,7 +10,6 @@ const CreateProfile = () => {
   const [skills, setSkills] = useState([]);
   const [position, setPosition] = useState('');
   const navigate = useNavigate();
-  const user = auth.currentUser;
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillLevel, setNewSkillLevel] = useState(1);
 
