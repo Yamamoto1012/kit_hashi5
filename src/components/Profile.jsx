@@ -117,14 +117,14 @@ const Profile = () => {
                   />
                 </svg>
               </button>
+              <button
+                onClick={handleEdit}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"
+              >
+                プロフィールの編集
+              </button>
               {showOptions && (
                 <div className="absolute top-0 left-10 z-10 bg-gray-800 text-white rounded-md py-2 shadow-lg whitespace-nowrap">
-                  <button
-                    onClick={handleEdit}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"
-                  >
-                    プロフィールの編集
-                  </button>
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none"

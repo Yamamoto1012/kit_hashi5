@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
-const skillsOptions = [
-  'プログラミング', 'デザイン', 'プロジェクト管理'
-]
-
 const EditProfile = () => {
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
