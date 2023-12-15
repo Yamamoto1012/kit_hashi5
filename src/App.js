@@ -12,7 +12,7 @@ import MembersPage from './components/MembersPage';
 import SearchQuestionButton from './components/SearchQuestionButton';
 import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
-import Announcement from './components/Announcement';
+import Announcement from './components/AnnouncementPage';
 
 
 

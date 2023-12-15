@@ -14,6 +14,7 @@ const AddMessage = ({ receiverId }) => {
       receiverId,
       message,
       timestamp: serverTimestamp(),
+      isRead:false,
     };
 
     await addDoc(collection(db, 'messages'), messageData);
