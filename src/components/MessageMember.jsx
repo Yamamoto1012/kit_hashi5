@@ -34,7 +34,7 @@ const UserList = ({ onUserSelect }) => {
           />
           <div>
             <div className="font-medium text-lg">{user.displayName}</div>
-            <div className="text-gray-600">Web Development</div>
+            {/*<div className="text-gray-600">Web Development</div>*/}
           </div>
         </div>
       ))}

@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   where,
+  updateDoc
 } from "firebase/firestore";
 import AddMessage from "./AddMesage";
 
@@ -15,15 +16,15 @@ const MessageList = ({ userId, receiverId }) => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState({});
   const currentUserId = auth.currentUser.uid;
+  const messagesQuery = query(
+    collection(db, "messages"),
+    where("senderId", "in", [currentUserId, receiverId]),
+    where("receiverId", "in", [currentUserId, receiverId]),
+    orderBy("timestamp", "asc")
+  );
+
 
   useEffect(() => {
-    const messagesQuery = query(
-      collection(db, "messages"),
-      where("senderId", "in", [currentUserId, receiverId]),
-      where("receiverId", "in", [currentUserId, receiverId]),
-      orderBy("timestamp", "asc")
-    );
-
     const unsubscribe = onSnapshot(messagesQuery, (querySnapshot) => {
       const filteredMessages = querySnapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() }))
@@ -31,11 +32,19 @@ const MessageList = ({ userId, receiverId }) => {
           (message.senderId === currentUserId && message.receiverId === receiverId) ||
           (message.senderId === receiverId && message.receiverId === currentUserId)
         );
+
+      filteredMessages.forEach(async message => {
+        if (message.receiverId === currentUserId && !message.isRead) {
+          const messageRef = doc(db, "messages", message.id);
+          await updateDoc(messageRef, { isRead: true }); // isReadをtrueに更新
+        }
+      });
+
       setMessages(filteredMessages);
     });
 
     return unsubscribe;
-  }, [currentUserId, receiverId]);
+  }, [currentUserId, receiverId, messagesQuery]);
 
   useEffect(() => {
     const fetchUser = async (userId) => {
@@ -43,8 +52,7 @@ const MessageList = ({ userId, receiverId }) => {
       if (userDoc.exists()) {
         setUsers(prevUsers => ({ ...prevUsers, [userId]: userDoc.data() }));
       }
-    };
-
+    }
     fetchUser(userId);
     fetchUser(receiverId);
   }, [userId, receiverId]);
@@ -61,8 +69,8 @@ const MessageList = ({ userId, receiverId }) => {
             >
               <div
                 className={`flex items-center shadow-lg p-3 rounded-lg ${message.senderId === userId
-                    ? "bg-blue-500 text-white flex-row-reverse"
-                    : "bg-gray-300"
+                  ? "bg-blue-500 text-white flex-row-reverse"
+                  : "bg-gray-300"
                   } max-w-xs md:max-w-md`}
               >
                 <img
