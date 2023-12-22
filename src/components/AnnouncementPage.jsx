@@ -1,35 +1,42 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Announcement from "./Announcement";
-import {auth, db} from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const AnnouncementPage = () => {
-    const [ unreadMessages, setUnreadMessages] = useState(0);
+    const [unreadMessages, setUnreadMessages] = useState(0);
+    const currentUser = auth.currentUser && auth.currentUser.uid; // null チェック
 
     useEffect(() => {
-        // Firestoreから未読メッセージ数を取得するロジック
         const fetchUnreadMessages = async () => {
-            const currentUserId = auth.currentUser.uid;
             try {
-                const querySnapshot = await db.collection('messages')
-                    .where('receiverId', '==', currentUserId)
-                    .where('isRead', '==', false)
-                    .get();
+                if (currentUser) { // currentUser が存在するかを確認
+                    const messagesQuery = query(
+                        collection(db, "messages"),
+                        where("receiverId", "==", currentUser),
+                        where("isRead", "==", false)
+                    );
 
-                // 未読メッセージ数を設定
-                setUnreadMessages(querySnapshot.size);
+                    const querySnapshot = await getDocs(messagesQuery);
+                    const unreadCount = querySnapshot.size;
+                    setUnreadMessages(unreadCount);
+                }
             } catch (error) {
-                console.error('Error fetching unread messages:', error);
+                console.error("未読メッセージの取得エラー:", error);
             }
         };
-
         fetchUnreadMessages();
-    }, []);
+    }, [currentUser]);
 
-    return(
+    return (
         <div>
-            <Announcement unreadMessages={unreadMessages} />
+            {!currentUser ? (
+                <Announcement unreadMessages={0} />
+            ) : (
+                <Announcement unreadMessages={unreadMessages} />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default AnnouncementPage;
