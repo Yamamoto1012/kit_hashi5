@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from "firebase/auth";
 
 const EditProfile = () => {
   const [displayName, setDisplayName] = useState('');
@@ -9,26 +10,40 @@ const EditProfile = () => {
   const [skills, setSkills] = useState([]);
   const [position, setPosition] = useState('');
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null);
   const [newSkillName, setNewSkillName] = useState(''); 
   const [newSkillLevel, setNewSkillLevel] = useState(1); 
+  
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const docRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setDisplayName(data.displayName || ''); // フィールド名を修正
-        setBio(data.bio || '');
-        setSkills(docSnap.data().skills || []);
-        setPosition(data.position || '');
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        // ログインしている場合
+        setUser(currentUser);
+        fetchUserProfile(currentUser.uid);
       } else {
-        console.log('No such document!');
+        // ログインしていない場合
+        navigate('/login'); // ログインページにリダイレクト
       }
-    };
-    fetchUserProfile();
-  }, [user.uid]);
+    });
+
+    return unsubscribe; // クリーンアップ関数
+  }, [navigate]);
+
+  const fetchUserProfile = async (userId) => {
+    const docRef = doc(db, 'users', userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // ドキュメントデータの取得
+      const data = docSnap.data();
+      setDisplayName(data.displayName || '');
+      setBio(data.bio || '');
+      setSkills(data.skills || []);
+      setPosition(data.position || '');
+    } else {
+      console.log('No such document!');
+    }
+  };
 
   //新しいスキルを追加する関数
   const addSkill = () => {
@@ -38,7 +53,6 @@ const EditProfile = () => {
     setNewSkillName(''); // 入力フォームをリセット
     setNewSkillLevel(1); // レベルもリセット
   };
-
 
   // スキルを更新する関数
   const updateSkill = (index, newSkill, newLevel) => {

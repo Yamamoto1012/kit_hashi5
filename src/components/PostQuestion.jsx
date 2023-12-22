@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 
 const PostQuestion = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const PostQuestion = () => {
   const [details, setDetails] = useState("");
   const [skills, setSkills] = useState("");
   const [author, setAuthor] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -34,6 +36,20 @@ const PostQuestion = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // ユーザーがログインしている場合
+        setCurrentUser(user);
+      } else {
+        // ユーザーがログアウトしている場合
+        navigate('/login'); // ログインページにリダイレクト
+      }
+    });
+
+    return unsubscribe; // クリーンアップ関数
+  }, [navigate]);
 
  const handleSubmit = async (e) => {
   e.preventDefault();
@@ -71,7 +87,7 @@ const PostQuestion = () => {
 
   return (
     <div>
-      {auth.currentUser ? (
+      {currentUser ? (
             <div className="max-w-2xl mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
       <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-2xl font-bold text-gray-800">解決したい問題を投稿する</h2>
