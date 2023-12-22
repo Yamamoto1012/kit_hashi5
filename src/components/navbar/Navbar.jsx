@@ -77,7 +77,7 @@ const Navbar = () => {
         <div
           className={`fixed inset-y-0 right-0 transform ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-300 ease-in-out bg-[#222831] p-4 h-full md:hidden`}
+          } transition-transform duration-300 ease-in-out bg-[#222831] p-8 h-full md:hidden`}
           style={{ zIndex: 40 }} // z-indexを40に設定
         >
           <div className="flex flex-col space-y-4 mt-14">
