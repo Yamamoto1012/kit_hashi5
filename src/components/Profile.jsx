@@ -60,7 +60,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto my-8 p-4 shadow-lg rounded-lg bg-[#222831] text-white">
+    <div className="max-w-2xl mx-auto my-8 p-6 shadow-lg rounded-lg bg-[#222831] text-white">
       {userProfile && (
         <div className="space-y-4">
           <img

@@ -13,7 +13,7 @@ const Navbar = () => {
     navigate(`/users/${auth.currentUser.uid}`);
   };
 
-  const handleScrolle = () => {
+  const handleScroll = () => { // Fix the typo here
     if (window.scrollY > 0) {
       setIsScrolled(true);
     } else {
@@ -22,14 +22,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {

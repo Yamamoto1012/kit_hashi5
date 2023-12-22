@@ -60,7 +60,7 @@ const MessageList = ({ userId, receiverId }) => {
   }, [userId, receiverId]);
 
   return (
-    <div className="flex flex-col justify-between overflow-auto h-[90vh] bg-gray-100 p-4 w-full max-w-2xl mx-auto rounded-2xl">
+    <div className="flex flex-col justify-between h-[90vh] bg-gray-100 p-4 w-full max-w-2xl mx-auto rounded-2xl">
       <div>
         {messages.map((message) => (
           <div

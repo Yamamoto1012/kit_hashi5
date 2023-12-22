@@ -1,6 +1,6 @@
 export default function Popup() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-1 text-center rainbow-bg">
+    <div className="fixed bottom-0 left-0 right-0 text-center rainbow-bg">
       <style>
         {`
           @keyframes rainbow-animation {
