@@ -132,7 +132,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen justify-center bg-gray-100">
+    <div className="flex flex-col min-h-screen justify-center bg-black">
       <div className="max-w-lg mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
           プロフィール編集
