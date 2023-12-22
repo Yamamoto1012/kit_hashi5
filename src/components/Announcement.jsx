@@ -36,7 +36,7 @@ const Announcement = ({ unreadMessages }) => {
             アンケートにご協力お願いします
           </a>
           <p className="text-red-600 text-4xl">
-            12/22 16:45追記
+            12/22 15:45追記
             <br />
             現在Firebaseがアクセス数制限のために
             <br />
