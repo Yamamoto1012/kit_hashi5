@@ -78,7 +78,7 @@ const PostQuestion = () => {
     setSkills("");
 
     //ページをリダイレクト
-    navigate("/");
+    navigate("/home");
     
   } catch (error) {
     console.error("Error adding document: ", error);

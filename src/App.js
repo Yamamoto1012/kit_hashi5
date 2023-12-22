@@ -24,7 +24,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
@@ -33,7 +33,7 @@ function App() {
         <Route path="/post" element={<PostQuestion/>} />
         <Route path="/users/:userId" element={<Profile />} />
         <Route path="/questions/:questionId" element={< QuestionDetail />} />
-        <Route path="/" element={<SearchQuestionButton />} />
+        <Route path="/home" element={<SearchQuestionButton />} />
         <Route path="/search-results" element={<SearchResult />} />
         <Route path="/message" element={<MessagesPage />} />
         <Route path="/announcement" element={<Announcement />}/>
