@@ -4,7 +4,7 @@ const Announcement = ({ unreadMessages }) => {
   const currentUser = auth.currentUser;
 
   return (
-    <div className="bg-gray-100 p-6 rounded-md shadow-md">
+    <div className="bg-gray-100 p-6 rounded-md shadow-md mt-2">
       <div className="mb-6">
         {currentUser && (
           <div>
@@ -37,9 +37,7 @@ const Announcement = ({ unreadMessages }) => {
           </a>
         </div>
         <br />
-        <p className="text-xl font-bold mb-3 text-gray-700">
-          広報
-        </p>
+        <p className="text-xl font-bold mb-3 text-gray-700">広報</p>
         <div className="border-t border-gray-300 pt-2 space-y-2">
           <a
             href="https://civictech-web-2023.vercel.app/"
@@ -52,22 +50,19 @@ const Announcement = ({ unreadMessages }) => {
           <p className="text-gray-700">
             ずんだもんによるシビックテックについての説明動画
           </p>
-          <div className="aspect-w-16 aspect-h-9">
+          <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
             <iframe
-              width="560"
-              height="315"
               src="https://www.youtube.com/embed/lhS7QgItOhs?si=bYEdCcAKWbU_jrNJ"
               title="YouTube video player"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              className="rounded-md"
+              className="absolute top-0 left-0 w-full h-full rounded-md"
+              style={{ position: "absolute", top: 0, left: 0 }}
             ></iframe>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 
