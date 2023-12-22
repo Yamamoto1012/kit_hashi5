@@ -20,7 +20,7 @@ const UserList = ({ onUserSelect }) => {
   }, []);
 
   return (
-    <div className="bg-[#222831] p-4 rounded-lg shadow max-w-sm">
+    <div className="bg-[#222831] m-4 px-12 py-4 rounded-lg shadow ">
       {users.map((user) => (
         <div
           key={user.id}
