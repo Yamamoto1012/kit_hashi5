@@ -14,6 +14,7 @@ import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
 import Announcement from './components/AnnouncementPage';
 import Popup from './components/Popup';
+import LoginPage from './components/auth/LoginPage';
 
 
 
@@ -22,7 +23,8 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-profile" element={<CreateProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />

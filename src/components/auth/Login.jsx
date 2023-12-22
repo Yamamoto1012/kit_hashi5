@@ -20,7 +20,7 @@ function Login() {
 
             if (userProfileDoc.exists()) {
                 // プロフィールが既に存在する場合、ホームページにリダイレクト
-                navigate('/');
+                navigate('/home');
             } else {
                 // プロフィールが存在しない場合、プロフィール作成ページにリダイレクト
                 navigate('/create-profile');

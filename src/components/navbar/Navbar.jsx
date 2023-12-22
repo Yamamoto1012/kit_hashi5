@@ -45,7 +45,7 @@ const Navbar = () => {
     <nav className={navbarClasses}>
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-4xl">
-          <Link className="hover:text-gray-400 transition duration-300" to="/">
+          <Link className="hover:text-gray-400 transition duration-300" to="/home">
             マッチ箱
           </Link>
         </div>
