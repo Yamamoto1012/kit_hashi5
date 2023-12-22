@@ -35,6 +35,15 @@ const Announcement = ({ unreadMessages }) => {
           >
             アンケートにご協力お願いします
           </a>
+          <p className="text-red-600 text-4xl">
+            12/22 15:45追記
+            <br />
+            現在Firebaseがアクセス数制限のために
+            <br />
+            大多数の機能にアクセスできない状況になっています
+            <br />
+            大変申し訳ございません
+          </p>
         </div>
         <br />
         <p className="text-xl font-bold mb-3 text-gray-700">広報</p>

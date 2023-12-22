@@ -12,7 +12,6 @@ import MembersPage from './components/MembersPage';
 import SearchQuestionButton from './components/SearchQuestionButton';
 import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
-import Announcement from './components/AnnouncementPage';
 import Popup from './components/Popup';
 import LoginPage from './components/auth/LoginPage';
 
