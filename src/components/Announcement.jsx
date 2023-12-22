@@ -35,7 +35,7 @@ const Announcement = ({ unreadMessages }) => {
           >
             アンケートにご協力お願いします
           </a>
-          <p className="text-gray-700">
+          <p className="text-red-600">
             現在Firebaseがアクセス数制限のため大多数の機能にアクセスできない状況になっています
             <br />
             大変申し訳ございません
