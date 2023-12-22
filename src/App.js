@@ -15,6 +15,7 @@ import MessagesPage from './components/MessagePage';
 import Announcement from './components/AnnouncementPage';
 import Popup from './components/Popup';
 import LoginPage from './components/auth/LoginPage';
+import AnnouncementPage from './components/AnnouncementPage';
 
 
 
@@ -23,20 +24,21 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
+
         <Route path="/" element={<LoginPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/create-profile" element={<CreateProfile />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/member" element={<MembersPage />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/post" element={<PostQuestion/>} />
-        <Route path="/users/:userId" element={<Profile />} />
-        <Route path="/questions/:questionId" element={< QuestionDetail />} />
-        <Route path="/" element={<SearchQuestionButton />} />
-        <Route path="/search-results" element={<SearchResult />} />
-        <Route path="/message" element={<MessagesPage />} />
-        <Route path="/announcement" element={<Announcement />}/>
+        <Route path="/create-profile" element={<AnnouncementPage />} />
+        <Route path="/edit-profile" element={<AnnouncementPage />} />
+        <Route path="/member" element={<AnnouncementPage />} />
+        <Route path="/Profile" element={<AnnouncementPage />} />
+        <Route path="/post" element={<AnnouncementPage/>} />
+        <Route path="/users/:userId" element={<AnnouncementPage />} />
+        <Route path="/questions/:questionId" element={<AnnouncementPage />} />
+        <Route path="/" element={<AnnouncementPage />} />
+        <Route path="/search-results" element={<AnnouncementPage/>} />
+        <Route path="/message" element={< AnnouncementPage />} />
+        <Route path="/announcement" element={< AnnouncementPage />}/>
       </Routes>
       <Popup />
     </Router>
