@@ -1,6 +1,6 @@
 export default function Popup() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 text-center rainbow-bg">
+    <div className="fixed bottom-0 left-0 right-0 p-1 text-center rainbow-bg">
       <style>
         {`
           @keyframes rainbow-animation {
@@ -19,7 +19,7 @@ export default function Popup() {
         `}
       </style>
       <p>こっちも見てほしいです... 
-        <a href="https://civictech-web-2023.vercel.app/" target="_blank" rel="noopener noreferrer" className="underline rainbow-text">CivicTechWebへ</a>
+        <a href="https://civictech-web-2023.vercel.app/" target="_blank" rel="noopener noreferrer" className="underline">CivicTechWebへ</a>
       </p>
     </div>
   );
