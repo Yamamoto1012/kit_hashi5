@@ -13,6 +13,7 @@ import SearchQuestionButton from './components/SearchQuestionButton';
 import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
 import Announcement from './components/AnnouncementPage';
+import Popup from './components/Popup';
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/message" element={<MessagesPage />} />
         <Route path="/announcement" element={<Announcement />}/>
       </Routes>
+      <Popup />
     </Router>
   );
 }
