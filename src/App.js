@@ -14,6 +14,7 @@ import SearchResult from './components/SerachResult';
 import MessagesPage from './components/MessagePage';
 import Popup from './components/Popup';
 import LoginPage from './components/auth/LoginPage';
+import Announcement from './components/Announcement';
 
 
 
