@@ -25,9 +25,9 @@ function App() {
       <Navbar />
       <Routes>
 
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<AnnouncementPage />} />
+        <Route path="/" element={<AnnouncementPage />} />
+        <Route path="/login" element={<AnnouncementPage />} />
         <Route path="/create-profile" element={<AnnouncementPage />} />
         <Route path="/edit-profile" element={<AnnouncementPage />} />
         <Route path="/member" element={<AnnouncementPage />} />
