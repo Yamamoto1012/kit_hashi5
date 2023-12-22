@@ -49,16 +49,19 @@ const Announcement = ({ unreadMessages }) => {
           </a>
           <p className="text-gray-700">
             ずんだもんによるシビックテックについての説明動画
+            <br />
+            ※一部UIなどが変更されている場合があります
           </p>
-          <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
-            <iframe
-              src="https://www.youtube.com/embed/lhS7QgItOhs?si=bYEdCcAKWbU_jrNJ"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="absolute top-0 left-0 w-full h-full rounded-md"
-              style={{ position: "absolute", top: 0, left: 0 }}
-            ></iframe>
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden" }}>
+              <iframe
+                src="https://www.youtube.com/embed/lhS7QgItOhs?si=bYEdCcAKWbU_jrNJ"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
