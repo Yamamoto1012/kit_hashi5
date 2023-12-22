@@ -5,7 +5,12 @@ import SearchQuestionButton from './SearchQuestionButton'
 const Home = () => {
   return (
     <>
-      <SearchQuestionButton />
+      <div>
+        現在Firebaseのエラーで大多数の機能にアクセスできない状況になっています
+        <br />
+        アンケートの回答をするのが非常に難しい状況ですがお願いいたします
+      </div>
+      <SearchQuestionButton />  
       <br></br>
         <QuestionList />
     </>
